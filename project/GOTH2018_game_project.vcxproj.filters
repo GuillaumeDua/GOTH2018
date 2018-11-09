@@ -1,0 +1,74 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="include\goth2018_game_project\polymorphic_vector_v2.hpp">
+      <Filter>include\goth2018_game_project</Filter>
+    </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\interactive_test.hpp">
+      <Filter>include\goth2018_game_project</Filter>
+    </ClInclude>
+    <ClInclude Include="test\entity.hpp">
+      <Filter>test\goth2018_game_project\test</Filter>
+    </ClInclude>
+    <ClInclude Include="test\graphics.hpp">
+      <Filter>test\goth2018_game_project\test</Filter>
+    </ClInclude>
+    <ClInclude Include="include\interactive_test.hpp">
+      <Filter>test\goth2018_game_project\test</Filter>
+    </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\graphics\graphics.hpp">
+      <Filter>include\goth2018_game_project\graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="ressources\sprites\background.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="ressources\sprites\explosion.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="ressources\sprites\ships.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="ressources\sprites\spaceship.PNG">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="ressources\sprites\test.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="include">
+      <UniqueIdentifier>{fed83c7c-b13b-4e8b-b687-0daa7f389a23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="source">
+      <UniqueIdentifier>{6cdf1456-12dc-4361-9d06-ec3a3075a1b3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ressource">
+      <UniqueIdentifier>{1807c35c-d206-4d78-a72d-b8ce9f727393}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{29c0b8ad-f65b-4783-8d56-baf348fb85b0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ressource\sprite">
+      <UniqueIdentifier>{3112b3c6-7ac6-4e8b-875b-a09bef7bc056}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\goth2018_game_project">
+      <UniqueIdentifier>{37b155aa-c7b1-4d23-b9bc-27dc0560b0d7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\goth2018_game_project">
+      <UniqueIdentifier>{06c00171-c2ca-4a8d-acbc-65c5949135ab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test\goth2018_game_project\test">
+      <UniqueIdentifier>{0dc5caa5-a560-45be-9f44-0be9f90f29ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="include\goth2018_game_project\graphics">
+      <UniqueIdentifier>{4a245403-03bc-4b89-83f0-27c1b6516182}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="source\Source.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
