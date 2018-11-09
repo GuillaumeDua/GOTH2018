@@ -2,6 +2,8 @@
 
 ## This is our participation to the [Game-Off 2018](https://itch.io/jam/game-off-2018)
 
+### About the game :
+
 > This is a survival-management space game that involve evolution mecanism.
 > The game strongly rely on procedural generation to offer a new experience at every try.
 >
@@ -14,7 +16,7 @@
 >
 > Let's start your very own journey and see !
 
-# Development stages :
+### Development stages :
 - Main target OS is actually Windows 64 bits.
 - Use [SFML](https://github.com/SFML/SFML) binaries ([DLL](https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-64-bit.zip))
 - Use [GCL](https://github.com/GuillaumeDua/GCL_CPP)
