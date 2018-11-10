@@ -29,3 +29,4 @@ This is our participation to the [Game-Off 2018](https://itch.io/jam/game-off-20
 - Some project's pathes are hard-coded :
   - External libraries in "C:\Dev\Ext_libs" . e.g "C:\Dev\Ext_libs\SFML\SFML-2.5.0"
   - GCL in "C:\DEV\PROJECTS\cpp\GCL_CPP"
+
