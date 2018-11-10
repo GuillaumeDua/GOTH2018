@@ -22,12 +22,13 @@
     <ClCompile Include="source\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\goth2018_game_project\configuration.hpp" />
     <ClInclude Include="include\goth2018_game_project\graphics\graphics.hpp" />
     <ClInclude Include="include\goth2018_game_project\interactive_test.hpp" />
     <ClInclude Include="include\goth2018_game_project\polymorphic_vector_v2.hpp" />
-    <ClInclude Include="include\interactive_test.hpp" />
-    <ClInclude Include="test\entity.hpp" />
-    <ClInclude Include="test\graphics.hpp" />
+    <ClInclude Include="test\goth2018_game_project\test\entity.hpp" />
+    <ClInclude Include="test\goth2018_game_project\test\graphics.hpp" />
+    <ClInclude Include="test\goth2018_game_project\test\interactive_test.hpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="ressources\sprites\background.png" />
@@ -111,6 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML-2.5.0\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\DEV\EXT_LIBS\SFML-2.5.0\lib</AdditionalLibraryDirectories>
@@ -126,6 +128,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML-2.5.0\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\DEV\EXT_LIBS\SFML-2.5.0\lib</AdditionalLibraryDirectories>
@@ -142,6 +145,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML-2.5.0\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -160,6 +164,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML-2.5.0\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>

@@ -7,10 +7,11 @@
 #include <thread>
 #include <Windows.h>
 
-namespace interactive_test
+namespace goth2018::test::interactive
 {
-	void spritesheet()
-	{
+	static void spritesheet()
+	{	// poor-quality
+
 		HWND consoleWindow = GetConsoleWindow();
 		SetWindowPos(
 			consoleWindow, 0,
@@ -18,12 +19,12 @@ namespace interactive_test
 			600, 900,
 			SWP_NOZORDER);
 
-		const sf::Sprite background_sprite{ goth2018::graphics::textures::get(goth2018::graphics::rendering_system::sprites_path + "background.png") };
+		const sf::Sprite background_sprite{ goth2018::graphics::textures::get(std::string{goth2018::configuration::path::sprites} +"\\background.png") };
 
 		std::string spritesheet_path;
 		do
 		{
-			std::cout << "Spritesheet path :\n>> ";
+			std::cout << "[+] Spritesheet path :\n>> ";
 			std::getline(std::cin, spritesheet_path);
 		} while (not std::cin);
 
@@ -35,13 +36,13 @@ namespace interactive_test
 				std::end(path)
 			);
 		}(spritesheet_path);
-		std::cout << "\nUsing path : [" << spritesheet_path << "]\n";
+		std::cout << "\n[+] Using path : [" << spritesheet_path << "]\n";
 
 		std::size_t construction_policy_choice;
 		do
 		{
 			std::cout
-				<< "Spritesheet construction policy :\n"
+				<< "[+] Spritesheet construction policy :\n"
 				<< "-> choose 1 to use sprites quantity\n"
 				<< "-> choose 2 to use sprites dimension\n"
 				<< ">> "
@@ -60,9 +61,9 @@ namespace interactive_test
 
 			if (construction_policy_choice == 1)
 			{
-				std::cout << "sprites per row :\n>> ";
+				std::cout << " - sprites per row :\n>> ";
 				do { std::cin >> arg.first; } while (not std::cin);
-				std::cout << "sprites per column :\n>> ";
+				std::cout << " - sprites per column :\n>> ";
 				do { std::cin >> arg.second; } while (not std::cin);
 
 				test_spritesheet = std::make_unique<goth2018::graphics::spritesheet>
@@ -75,9 +76,9 @@ namespace interactive_test
 			}
 			else
 			{
-				std::cout << "sprite's width  :\n>> ";
+				std::cout << " - sprite's width  :\n>> ";
 				do { std::cin >> arg.first; } while (not std::cin);
-				std::cout << "sprite's height :\n>> ";
+				std::cout << " - sprite's height :\n>> ";
 				do { std::cin >> arg.second; } while (not std::cin);
 
 				test_spritesheet = std::make_unique<goth2018::graphics::spritesheet>
@@ -97,20 +98,20 @@ namespace interactive_test
 			do
 			{
 				std::cout
-					<< "Select animation range, from 0 to " << test_spritesheet->texture_it.sprite_count - 1 << '\n'
-					<< "from :\n>> ";
+					<< "[+] Select animation range, from 0 to " << test_spritesheet->texture_it.sprite_count - 1 << '\n'
+					<< " - from :\n>> ";
 				std::cin >> sprite_range.first;
 			} while (not std::cin);
 			do
 			{
-				std::cout << "to   :\n>> ";
+				std::cout << " - to   :\n>> ";
 				std::cin >> sprite_range.second;
 			} while (not std::cin || sprite_range.second > (test_spritesheet->texture_it.sprite_count - 1));
 			test_animation = goth2018::graphics::animation{ test_spritesheet->generate_sprites(std::move(sprite_range)) };
 		};
 
 		std::cout
-			<< "----------------------------------------\n"
+			<< "-------------- UI commands -------------\n"
 			<< "- Press <space> to create an animation\n"
 			<< "- Press <enter> to change FPS rate\n"
 			<< "- Close window to quit\n"
@@ -153,12 +154,12 @@ namespace interactive_test
 						std::size_t fps;
 						do
 						{
-							std::cout << "FPS requiered (from 1 to 60) :\n>> ";
+							std::cout << "[+] FPS requiered (from 1 to 60) :\n>> ";
 							std::cin >> fps;
 						} while (not std::cin || fps < 1 || fps > 60);
 						time_between_frames = std::chrono::milliseconds{ std::chrono::milliseconds{ std::chrono::seconds{ 1 } }.count() / fps };
 						std::cout
-							<< "Setting FPS to " << fps
+							<< "[+] Setting FPS to " << fps
 							<< ", which represents " << time_between_frames.count()
 							<< " ms between frames\n";
 					}

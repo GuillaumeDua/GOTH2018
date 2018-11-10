@@ -9,6 +9,7 @@
 #include <algorithm>
 
 #include <goth2018_game_project/test/graphics.hpp>
+#include <goth2018_game_project/configuration.hpp>
 
 // todo : property -> exposure
 //      + concept -> contract-accessor ?
@@ -19,11 +20,16 @@ int main()
 {
 	try
 	{
-		gcl::test::components
-		<
-			test::texture_iterator
-			//test::entity
-		>::test();
+		std::cout << "[+] Loading ressources from : [" << goth2018::configuration::path::ressources << ']' << std::endl;
+
+		goth2018::test::interactive::spritesheet();
+
+		//gcl::test::components
+		//<
+		//	test::texture_iterator
+		//	//test::entity
+		//>::test();
+		
 	}
 	catch (const std::exception & ex)
 	{

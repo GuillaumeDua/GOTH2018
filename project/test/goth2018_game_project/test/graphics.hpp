@@ -3,7 +3,7 @@
 #include <gcl_cpp/test.hpp>
 #include <goth2018_game_project/graphics/graphics.hpp>
 
-namespace test
+namespace goth2018::test::graphics
 {
 	struct texture_iterator
 	{

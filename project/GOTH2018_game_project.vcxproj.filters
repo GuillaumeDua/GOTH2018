@@ -7,17 +7,20 @@
     <ClInclude Include="include\goth2018_game_project\interactive_test.hpp">
       <Filter>include\goth2018_game_project</Filter>
     </ClInclude>
-    <ClInclude Include="test\entity.hpp">
-      <Filter>test\goth2018_game_project\test</Filter>
-    </ClInclude>
-    <ClInclude Include="test\graphics.hpp">
-      <Filter>test\goth2018_game_project\test</Filter>
-    </ClInclude>
-    <ClInclude Include="include\interactive_test.hpp">
-      <Filter>test\goth2018_game_project\test</Filter>
-    </ClInclude>
     <ClInclude Include="include\goth2018_game_project\graphics\graphics.hpp">
       <Filter>include\goth2018_game_project\graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="test\goth2018_game_project\test\entity.hpp">
+      <Filter>test\goth2018_game_project\test</Filter>
+    </ClInclude>
+    <ClInclude Include="test\goth2018_game_project\test\graphics.hpp">
+      <Filter>test\goth2018_game_project\test</Filter>
+    </ClInclude>
+    <ClInclude Include="test\goth2018_game_project\test\interactive_test.hpp">
+      <Filter>test\goth2018_game_project\test</Filter>
+    </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\configuration.hpp">
+      <Filter>include\goth2018_game_project</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
