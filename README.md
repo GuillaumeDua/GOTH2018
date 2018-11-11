@@ -19,6 +19,8 @@ This is our participation to the [Game-Off 2018](https://itch.io/jam/game-off-20
 ## Development stages :
 - Main target OS is actually Windows 64 bits.
 - Use [SFML](https://github.com/SFML/SFML) binaries ([DLL](https://www.sfml-dev.org/files/SFML-2.5.1-windows-vc15-64-bit.zip))
+- Use [ImGUI](https://github.com/ocornut/imgui) 
+- Use [ImGUI-SFML](https://github.com/eliasdaler/imgui-sfml) for UI elements
 - Use [GCL](https://github.com/GuillaumeDua/GCL_CPP)
 
 ## Technical details :
