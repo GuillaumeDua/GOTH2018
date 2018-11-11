@@ -4,9 +4,6 @@
     <ClInclude Include="include\goth2018_game_project\polymorphic_vector_v2.hpp">
       <Filter>include\goth2018_game_project</Filter>
     </ClInclude>
-    <ClInclude Include="include\goth2018_game_project\interactive_test.hpp">
-      <Filter>include\goth2018_game_project</Filter>
-    </ClInclude>
     <ClInclude Include="include\goth2018_game_project\graphics\graphics.hpp">
       <Filter>include\goth2018_game_project\graphics</Filter>
     </ClInclude>
@@ -22,23 +19,6 @@
     <ClInclude Include="include\goth2018_game_project\configuration.hpp">
       <Filter>include\goth2018_game_project</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="ressources\sprites\background.png">
-      <Filter>ressource\sprite</Filter>
-    </Image>
-    <Image Include="ressources\sprites\explosion.png">
-      <Filter>ressource\sprite</Filter>
-    </Image>
-    <Image Include="ressources\sprites\ships.png">
-      <Filter>ressource\sprite</Filter>
-    </Image>
-    <Image Include="ressources\sprites\spaceship.PNG">
-      <Filter>ressource\sprite</Filter>
-    </Image>
-    <Image Include="ressources\sprites\test.png">
-      <Filter>ressource\sprite</Filter>
-    </Image>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -73,5 +53,22 @@
     <ClCompile Include="source\Source.cpp">
       <Filter>source</Filter>
     </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\ressources\sprites\background.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\sprites\explosion.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\sprites\ships.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\sprites\spaceship.PNG">
+      <Filter>ressource\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\sprites\test.png">
+      <Filter>ressource\sprite</Filter>
+    </Image>
   </ItemGroup>
 </Project>
