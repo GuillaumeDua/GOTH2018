@@ -2,6 +2,8 @@
 
 #include <string_view>
 #include <string>
+#include <unordered_map>
+#include <filesystem>
 
 namespace goth2018::configuration
 {
@@ -16,5 +18,42 @@ namespace goth2018::configuration
 		static inline const constexpr std::string_view audio = RESSOURCES_DIRECTORY "\\audio";
 		static inline const constexpr std::string_view sounds = RESSOURCES_DIRECTORY "\\audio\\sounds";
 		static inline const constexpr std::string_view musics = RESSOURCES_DIRECTORY "\\audio\\musics";
+	};
+
+	/*{
+		{ 42, 42 }
+		{ 1, 2 }
+
+		enum class QWE : uint8_t
+		{
+			a,b,c,d,e,f,g,
+
+			first = a,
+			last = g
+		}
+	}*/
+
+	struct spritesheet
+	{	// todo : template enum type instead of uint8_t ?
+		using animation_range = std::pair<std::size_t, std::size_t>; // from (index), to (index)
+		using animation_descriptors_type = std::unordered_map<uint8_t, animation_range>;
+
+		spritesheet(std::filesystem::path && path)
+		{
+			load_from_file(std::forward<decltype(path)>(path));
+		}
+
+		const auto & get_animations_descriptors() const
+		{
+			return animations_descriptors;
+		}
+
+	private:
+		void load_from_file(std::filesystem::path && path)
+		{
+
+		}
+
+		animation_descriptors_type animations_descriptors;
 	};
 }
