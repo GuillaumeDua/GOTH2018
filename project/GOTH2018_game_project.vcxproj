@@ -112,7 +112,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\lib</AdditionalLibraryDirectories>
@@ -128,7 +128,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
-      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\lib</AdditionalLibraryDirectories>
@@ -145,7 +145,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -164,7 +164,7 @@
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\include</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(ProjectDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
