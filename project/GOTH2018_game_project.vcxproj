@@ -35,13 +35,6 @@
     <ClInclude Include="test\goth2018_game_project\test\graphics.hpp" />
     <ClInclude Include="test\goth2018_game_project\test\interactive_test.hpp" />
   </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\ressources\sprites\background.png" />
-    <Image Include="..\ressources\sprites\explosion.png" />
-    <Image Include="..\ressources\sprites\ships.png" />
-    <Image Include="..\ressources\sprites\spaceship.PNG" />
-    <Image Include="..\ressources\sprites\test.png" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{C0CCD03D-2F5D-4ACA-8142-890F80C1025D}</ProjectGuid>
