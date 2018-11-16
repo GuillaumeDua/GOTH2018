@@ -90,4 +90,27 @@
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>
+  <ItemGroup>
+    <Image Include="..\ressources\image\background\background.png">
+      <Filter>ressource\image\background</Filter>
+    </Image>
+    <Image Include="..\ressources\image\background\phoenix_landing.jpg">
+      <Filter>ressource\image\background</Filter>
+    </Image>
+    <Image Include="..\ressources\image\background\planet_cartoon_landscape.png">
+      <Filter>ressource\image\background</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\explosion.png">
+      <Filter>ressource\image\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\ships.png">
+      <Filter>ressource\image\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\spaceship.PNG">
+      <Filter>ressource\image\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\test.png">
+      <Filter>ressource\image\sprite</Filter>
+    </Image>
+  </ItemGroup>
 </Project>
