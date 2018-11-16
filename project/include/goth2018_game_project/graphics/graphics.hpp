@@ -29,7 +29,7 @@ namespace goth2018::graphics
 					catch (const std::out_of_range &)
 					{
 						if (!storage[path].loadFromFile(path))
-							throw std::runtime_error{ "textures::factory : cannot load" + path };
+							throw std::runtime_error{ "textures::factory : cannot load : " + path };
 						return storage.at(path);
 					}
 				}

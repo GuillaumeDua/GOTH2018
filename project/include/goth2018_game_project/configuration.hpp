@@ -14,12 +14,12 @@ namespace goth2018::configuration
 		static_assert(false, "Preprocessor macro not defined : ressources directory (RESSOURCES_DIRECTORY)");
 #endif
 		static inline const constexpr std::string_view ressources = RESSOURCES_DIRECTORY;
-		static inline const constexpr std::string_view images = RESSOURCES_DIRECTORY "\\images\\";
-		static inline const constexpr std::string_view sprites = RESSOURCES_DIRECTORY "\\images\\sprites\\";
-		static inline const constexpr std::string_view background = RESSOURCES_DIRECTORY "\\images\\background\\";
+		static inline const constexpr std::string_view images = RESSOURCES_DIRECTORY "\\image\\";
+		static inline const constexpr std::string_view sprites = RESSOURCES_DIRECTORY "\\image\\sprite\\";
+		static inline const constexpr std::string_view background = RESSOURCES_DIRECTORY "\\image\\background\\";
 		static inline const constexpr std::string_view audio = RESSOURCES_DIRECTORY "\\audio\\";
-		static inline const constexpr std::string_view sounds = RESSOURCES_DIRECTORY "\\audio\\sounds\\";
-		static inline const constexpr std::string_view musics = RESSOURCES_DIRECTORY "\\audio\\musics\\";
+		static inline const constexpr std::string_view sounds = RESSOURCES_DIRECTORY "\\audio\\sound\\";
+		static inline const constexpr std::string_view musics = RESSOURCES_DIRECTORY "\\audio\\music\\";
 	};
 
 	/*{
