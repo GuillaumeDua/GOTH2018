@@ -27,6 +27,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\goth2018_game_project\configuration.hpp" />
+    <ClInclude Include="include\goth2018_game_project\engine\core.hpp" />
+    <ClInclude Include="include\goth2018_game_project\engine\scene.hpp" />
     <ClInclude Include="include\goth2018_game_project\graphics\graphics.hpp" />
     <ClInclude Include="include\goth2018_game_project\interactive_test.hpp" />
     <ClInclude Include="include\goth2018_game_project\polymorphic_vector_v2.hpp" />

@@ -2,6 +2,15 @@
 
 #include <goth2018_game_project/sfml_wrappers.hpp>
 #include <SFML/Graphics.hpp>
+#include <functional>
+#include <utility>
+#include <vector>
+#include <thread>
+
+#include <imgui.h>
+#include <imgui-SFML.h>
+
+using namespace std::chrono_literals;
 
 namespace goth2018::graphics
 {
@@ -30,7 +39,27 @@ namespace goth2018::graphics
 			} static factory;
 			return factory.get(path);
 		}
+		static sf::Sprite to_sprite(const sf::Texture & texture)
+		{
+			return sf::Sprite{ texture };
+		}
 	}
+
+	struct window : sf::RenderWindow
+	{
+		using size_type = std::pair<unsigned int, unsigned int>;
+		window(size_type && size, std::string && name)
+			: sf::RenderWindow(sf::VideoMode(size.first, size.second), std::forward<std::string>(name))
+		{
+			setVerticalSyncEnabled(true);
+			setFramerateLimit(60);
+			ImGui::SFML::Init(*this);
+		}
+		~window()
+		{
+			ImGui::SFML::Shutdown();
+		}
+	};
 
 	struct spritesheet
 	{	// hold a texture and convert to sprite
@@ -65,8 +94,10 @@ namespace goth2018::graphics
 			// sprite.setTextureRect(sf::IntRect(10, 10, 32, 32));
 
 			constexpr texture_iterator(sfml_wrappers::cx_sf_vector2i texture_size, sfml_wrappers::cx_sf_vector2i sprite_size)
-				: sprite{ texture_size.first % sprite_size.first == 0 ? sprite_size : throw std::logic_error("spritesheet::texture_iterator : width") }
-				, texture{ texture_size.second % sprite_size.second == 0 ? texture_size : throw std::logic_error("spritesheet::texture_iterator : height") }
+				/*: sprite{ texture_size.first % sprite_size.first == 0 ? sprite_size : throw std::logic_error("spritesheet::texture_iterator : width") }
+				, texture{ texture_size.second % sprite_size.second == 0 ? texture_size : throw std::logic_error("spritesheet::texture_iterator : height") }*/
+				: sprite {sprite_size}
+				, texture{texture_size}
 				, sprite_quantity{ texture_size.first / sprite_size.first, texture_size.second / sprite_size.second }
 			{}
 
@@ -117,13 +148,6 @@ namespace goth2018::graphics
 		const texture_iterator texture_it{ { texture.getSize().x, texture.getSize().y }, sprite_dimension };
 	};
 
-	struct scene
-	{
-		const sf::Sprite background;
-		// std::vector<entities>
-		// events
-	};
-
 	struct animation
 	{
 		using sprites_type = std::vector<sf::Sprite>;
@@ -155,25 +179,5 @@ namespace goth2018::graphics
 	private:
 		sprites_type sprites;
 		sprites_type::iterator sprite_it = std::begin(sprites);
-	};
-
-	struct rendering_system
-	{
-		static inline const std::string sprites_path = "C:/Users/Guss/Documents/Visual Studio 2017/Projects/quick_test_SFML/ressources/sprites/";
-
-		void render_once(const scene & scene)
-		{
-
-		}
-
-		void render_once(sf::RenderWindow & window)
-		{
-			window.clear();
-			window.draw(background_sprite);
-			window.display();
-		}
-
-	private:
-		const sf::Sprite background_sprite{ graphics::textures::get(sprites_path + "background.png") };
 	};
 }
