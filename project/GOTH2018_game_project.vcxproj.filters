@@ -19,6 +19,12 @@
     <ClInclude Include="include\goth2018_game_project\configuration.hpp">
       <Filter>include\goth2018_game_project</Filter>
     </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\engine\core.hpp">
+      <Filter>include\goth2018_game_project\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\engine\scene.hpp">
+      <Filter>include\goth2018_game_project\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
@@ -48,9 +54,24 @@
     <Filter Include="include\goth2018_game_project\graphics">
       <UniqueIdentifier>{4a245403-03bc-4b89-83f0-27c1b6516182}</UniqueIdentifier>
     </Filter>
+    <Filter Include="include\goth2018_game_project\engine">
+      <UniqueIdentifier>{ecf6424b-b3d0-45f8-95a5-38144d2c746b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Source.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\EXT_LIBS\imgui-sfml\imgui-SFML.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\EXT_LIBS\imgui\imgui_draw.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\EXT_LIBS\imgui\imgui.cpp">
+      <Filter>source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\EXT_LIBS\imgui\imgui_widgets.cpp">
       <Filter>source</Filter>
     </ClCompile>
   </ItemGroup>

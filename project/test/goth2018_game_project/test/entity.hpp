@@ -15,8 +15,7 @@ namespace test
 		{
 			static void proceed()
 			{
-				struct entity_interface {};
-				using entity_container_t = gcl::container::entity_vector<entity_interface>;
+				using entity_container_t = gcl::container::entity_vector;
 
 				struct available_properties
 				{	// todo : property -> contract -> accessor
