@@ -1,14 +1,18 @@
 #pragma once
 
+#include <goth2018_game_project/graphics/graphics.hpp>
+
 #include <functional>
 #include <string>
-#include <goth2018_game_project/graphics/graphics.hpp>
+#include <unordered_map>
 
 namespace goth2018::engine
 {
 	struct scene
 	{
 		using menu_drawer_type = std::function<void()>;
+		using event_handler_type = std::function<void(const sf::Event&, scene &)>;
+		using event_handlers_container_type = std::unordered_map<sf::Event::EventType, event_handler_type>;
 
 		scene(std::string && scene_name, sf::Sprite & background_sprite, menu_drawer_type && scene_menu_drawer = []() {})
 			: menu_drawer{ scene_menu_drawer }
@@ -30,15 +34,18 @@ namespace goth2018::engine
 		{
 
 		}
-		void input()
+		void dispatch_event(sf::Event & event)
 		{
-
+			auto match = event_handlers.find(event.type);
+			if (match == std::cend(event_handlers))
+				return;
+			match->second(event, *this);
 		}
 
 		const std::string name;
 		const sf::Sprite background;
+		event_handlers_container_type event_handlers;
 
-		// events
 	private:
 		const menu_drawer_type menu_drawer;
 		// std::vector<entities>

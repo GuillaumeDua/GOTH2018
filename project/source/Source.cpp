@@ -43,6 +43,8 @@ namespace control
 	}
 }
 
+#include <goth2018_game_project/game_implementation/scene/space_map.hpp>
+
 int main()
 {
 	try
@@ -54,7 +56,7 @@ int main()
 		{
 			window,
 			{
-				{ "space", std::string{goth2018::configuration::path::background} +"background.png"},
+				goth2018::game_implementation::scenes::space_map::generate(),
 				{ "planet", std::string{goth2018::configuration::path::background} +"planet_cartoon_landscape.png", []() {control::draw_exploration_menu(); }},
 			}
 		};

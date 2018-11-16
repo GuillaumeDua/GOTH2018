@@ -58,7 +58,9 @@ namespace goth2018::engine
 			sf::Event event;
 			while (window.pollEvent(event))
 			{
-				// todo : dispatch event
+				auto & active_scene = *active_scene_ptr;
+				active_scene.dispatch_event(event);
+
 				ImGui::SFML::ProcessEvent(event);
 				if (event.type == sf::Event::Closed)
 				{
