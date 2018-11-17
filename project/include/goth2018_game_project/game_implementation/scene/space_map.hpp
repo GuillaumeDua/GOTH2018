@@ -27,6 +27,23 @@ namespace goth2018::game_implementation::scenes
 			};
 			space_map_scene.event_handlers = std::move(event_handlers);
 
+			auto generate_planet = [](sf::Vector2f && position)
+			{
+				sf::CircleShape circle;
+				circle.setRadius(50);
+				circle.setOutlineColor(sf::Color::Red);
+				circle.setOutlineThickness(5);
+				circle.setPosition(position);
+				return circle;
+			};
+
+			for (auto counter = 0; counter < 10; ++counter)
+			{
+				space_map_scene.entities.push_back(generate_planet({ counter * 50.f, 50 }));
+				space_map_scene.entities.push_back(generate_planet({ counter * 50.f, 250 }));
+				space_map_scene.entities.push_back(generate_planet({ counter * 50.f, 450 }));
+			}
+
 			return space_map_scene;
 		}
 	}

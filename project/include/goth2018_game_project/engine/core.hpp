@@ -11,12 +11,16 @@ namespace goth2018::engine
 	{
 		using scene_collection = std::vector<scene>;
 
+		core(const core &) = delete;
+		core(core &&) = default;
+
 		core(sf::RenderWindow & render_window, scene_collection && scenes_collection)
 			: window{ render_window }
 			, scenes{ std::forward<scene_collection>(scenes_collection) }
 		{
 			if (scenes.size() == 0)
 				throw std::runtime_error{ "goth2018::graphics::core::ctor : no scenes" };
+			active_scene_ptr = &(*std::begin(scenes));
 		}
 
 		void run()
@@ -123,7 +127,7 @@ namespace goth2018::engine
 	private:
 		sf::RenderWindow & window;
 		scene_collection scenes;
-		scene_collection::value_type * active_scene_ptr = &(*std::begin(scenes));
+		scene_collection::value_type * active_scene_ptr;
 		bool is_running = false;
 	};
 }

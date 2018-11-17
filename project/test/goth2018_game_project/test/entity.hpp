@@ -1,15 +1,14 @@
 #pragma once
 
 #include <gcl_cpp/test.hpp>
-
 #include <gcl_cpp/container/entity_vector.hpp>
 #include <tuple>
+#include <vector>
 
-namespace test
+namespace goth2018::test
 {
 	struct entity
 	{
-		
 
 		struct container
 		{
@@ -29,9 +28,24 @@ namespace test
 				struct B { using properties_t = std::tuple<available_properties::drawable>; };
 				struct C { using properties_t = std::tuple<available_properties::has_collision>; };
 
-				entity_container_t entities;
+				entity_container_t entities{ A{}, B{}, C{}, A{}, B{}, C{}, A{} };
 
-				entities.push_back(std::make_unique<A>());
+				std::cout << entities.get<available_properties::drawable>().size() << std::endl;
+				for (const auto & elem : entities.get())
+				{
+					std::cout << "\t - " << elem->type().name() << '\n';
+				}
+
+				//entities.remove<available_properties::drawable>();
+				entities.remove<A>();
+
+				std::cout << entities.get<available_properties::drawable>().size() << std::endl;
+				for (const auto & elem : entities.get())
+				{
+					std::cout << "\t - " << elem->type().name() << '\n';
+				}
+				/*auto & first_A = std::any_cast<A>(*(entities.get().at(0).get()));
+				entities.remove_if()*/
 			}
 		};
 

@@ -28,6 +28,9 @@
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene\space_map.hpp">
       <Filter>include\goth2018_game_project\game_implementation\scene</Filter>
     </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\game_implementation\scene\exploration.hpp">
+      <Filter>include\goth2018_game_project\game_implementation\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">
