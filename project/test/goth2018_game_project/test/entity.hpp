@@ -5,11 +5,44 @@
 #include <tuple>
 #include <vector>
 
+#include <goth2018_game_project/engine/entity.hpp>
+
+#include <gcl_cpp/introspection.hpp>
+#include <type_traits>
+
+namespace goth2018::engine::entity
+{
+	namespace property
+	{
+		struct drawable {};
+		struct updatable {};
+	};
+}
+
+// namespace gcl::introspection::generated :
+GCL_Introspection_Generate__has_nested(drawable);
+GCL_Introspection_Generate__has_nested(updatable);
+
+GCL_Introspection_Generate__has_member_function(notify_collision);
+GCL_Introspection_Generate__has_nested(hitbox);
+
+namespace goth2018::engine::entity::contract
+{
+	template <typename T>
+	constexpr bool has_collision()
+	{
+		using type = std::decay_t<T>;
+		return
+			gcl::introspection::generated::has_nested_type::hitbox<type> &&
+			gcl::introspection::generated::has_member_function::notify_collision<type>
+			;
+	}
+}
+
 namespace goth2018::test
 {
 	struct entity
 	{
-
 		struct container
 		{
 			static void proceed()
@@ -30,22 +63,12 @@ namespace goth2018::test
 
 				entity_container_t entities{ A{}, B{}, C{}, A{}, B{}, C{}, A{} };
 
-				std::cout << entities.get<available_properties::drawable>().size() << std::endl;
-				for (const auto & elem : entities.get())
-				{
-					std::cout << "\t - " << elem->type().name() << '\n';
-				}
-
-				//entities.remove<available_properties::drawable>();
 				entities.remove<A>();
-
-				std::cout << entities.get<available_properties::drawable>().size() << std::endl;
-				for (const auto & elem : entities.get())
-				{
-					std::cout << "\t - " << elem->type().name() << '\n';
-				}
-				/*auto & first_A = std::any_cast<A>(*(entities.get().at(0).get()));
-				entities.remove_if()*/
+				GCL_TEST__EXPECT_VALUE(entities.get<A>().size(), 0);
+				GCL_TEST__EXPECT_VALUE(entities.get().size(), 4);
+				entities.remove<available_properties::drawable>();
+				GCL_TEST__EXPECT_VALUE(entities.get<B>().size(), 0);
+				GCL_TEST__EXPECT_VALUE(entities.get().size(), 2);
 			}
 		};
 

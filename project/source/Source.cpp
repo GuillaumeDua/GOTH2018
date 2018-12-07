@@ -47,13 +47,11 @@ int main()
 		};
 		system.run();
 
-
-		gcl::test::components
-		<
-			goth2018::test::graphics::texture_iterator,
-			goth2018::test::entity
-		>::test();
-		
+		//gcl::test::components
+		//<
+		//	goth2018::test::graphics::texture_iterator,
+		//	goth2018::test::entity
+		//>::test();
 	}
 	catch (const std::exception & ex)
 	{

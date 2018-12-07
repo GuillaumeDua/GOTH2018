@@ -31,6 +31,15 @@
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene\exploration.hpp">
       <Filter>include\goth2018_game_project\game_implementation\scene</Filter>
     </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\engine\entity.hpp">
+      <Filter>include\goth2018_game_project\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\engine\collision.hpp">
+      <Filter>include\goth2018_game_project\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\engine\fps_manager.hpp">
+      <Filter>include\goth2018_game_project\engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">

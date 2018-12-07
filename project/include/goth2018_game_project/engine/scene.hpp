@@ -1,11 +1,12 @@
 #pragma once
 
 #include <goth2018_game_project/graphics/graphics.hpp>
+#include <goth2018_game_project/engine/entity.hpp>
+#include <gcl_cpp/pattern/ecs.hpp>
 
 #include <functional>
 #include <string>
 #include <unordered_map>
-#include <gcl_cpp/container/polymorphic_vector.hpp>
 
 namespace goth2018::engine
 {
@@ -33,10 +34,13 @@ namespace goth2018::engine
 		{
 			window.draw(background);
 			menu_drawer();
-			/*for (auto & drawable_entity : entities.get<>())
-			{
 
-			}*/
+			using drawable_entity_contract = goth2018::engine::entity::contracts::drawable;
+			entities.for_each_entities(drawable_entity_contract{}, [&window](auto & entity, auto & position, auto & rendering)
+			{
+				//rendering.drawable->setPosition(position.value);
+				window.draw(rendering);
+			});
 		}
 		void update()
 		{
@@ -53,7 +57,7 @@ namespace goth2018::engine
 		const std::string name;
 		const sf::Sprite background;
 		event_handlers_container_type event_handlers;
-		gcl::container::polymorphic_vector entities;
+		goth2018::engine::entity::manager_type entities{ 10 };
 
 	private:
 		const menu_drawer_type menu_drawer;

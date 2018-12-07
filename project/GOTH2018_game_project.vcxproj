@@ -27,7 +27,10 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\goth2018_game_project\configuration.hpp" />
+    <ClInclude Include="include\goth2018_game_project\engine\collision.hpp" />
     <ClInclude Include="include\goth2018_game_project\engine\core.hpp" />
+    <ClInclude Include="include\goth2018_game_project\engine\entity.hpp" />
+    <ClInclude Include="include\goth2018_game_project\engine\fps_manager.hpp" />
     <ClInclude Include="include\goth2018_game_project\engine\scene.hpp" />
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene\exploration.hpp" />
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene\space_map.hpp" />
@@ -122,6 +125,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\include;C:\Dev\EXT_LIBS\imgui-sfml;C:\Dev\EXT_LIBS\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\lib;C:\DEV\EXT_LIBS\glew-2.1.0\lib\Release\x64</AdditionalLibraryDirectories>
@@ -138,6 +142,7 @@
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <AdditionalOptions>/std:c++latest %(AdditionalOptions)</AdditionalOptions>
       <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
     </ClCompile>
     <Link>
       <AdditionalLibraryDirectories>C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\lib;</AdditionalLibraryDirectories>
@@ -155,6 +160,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\include;C:\Dev\EXT_LIBS\imgui-sfml;C:\Dev\EXT_LIBS\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
@@ -174,6 +180,7 @@
       <AdditionalIncludeDirectories>$(ProjectDir)\include;$(ProjectDir)\test;C:\DEV\PROJECTS\cpp\GCL_CPP\PROJECT\include;C:\DEV\EXT_LIBS\SFML\SFML-2.5.1\include;C:\Dev\EXT_LIBS\imgui-sfml;C:\Dev\EXT_LIBS\imgui</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <PreprocessorDefinitions>RESSOURCES_DIRECTORY=R"($(SolutionDir)ressources)";_MBCS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RemoveUnreferencedCodeData>true</RemoveUnreferencedCodeData>
     </ClCompile>
     <Link>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
