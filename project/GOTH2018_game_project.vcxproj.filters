@@ -93,6 +93,9 @@
     <Filter Include="include\goth2018_game_project\game_implementation\scene">
       <UniqueIdentifier>{737b1f1f-dbb1-47b5-a652-acdc0555c51d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ressource\image\sprite\planets">
+      <UniqueIdentifier>{ea33493a-bf20-4f3c-87ee-f50bbb073f64}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Source.cpp">
@@ -132,6 +135,51 @@
     </Image>
     <Image Include="..\ressources\image\sprite\test.png">
       <Filter>ressource\image\sprite</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 1.1a.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 1.2a.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 1.3a.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 1.4.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 1.5.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\planet 2.1a.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\planet 2.2a.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 2.3a.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 2.4.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 2.5.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 3.1.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 3.2.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 3.3.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\Planet 3.4.png">
+      <Filter>ressource\image\sprite\planets</Filter>
+    </Image>
+    <Image Include="..\ressources\image\sprite\Planets\planet 3.5.png">
+      <Filter>ressource\image\sprite\planets</Filter>
     </Image>
   </ItemGroup>
 </Project>

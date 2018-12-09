@@ -20,6 +20,8 @@ namespace goth2018::configuration
 		static inline const constexpr std::string_view audio = RESSOURCES_DIRECTORY "\\audio\\";
 		static inline const constexpr std::string_view sounds = RESSOURCES_DIRECTORY "\\audio\\sound\\";
 		static inline const constexpr std::string_view musics = RESSOURCES_DIRECTORY "\\audio\\music\\";
+
+		static inline const constexpr std::string_view planet_sprites = RESSOURCES_DIRECTORY "\\image\\sprite\\Planets\\spritesheet.png";
 	};
 
 	/*{

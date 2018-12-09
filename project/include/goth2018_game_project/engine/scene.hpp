@@ -38,7 +38,7 @@ namespace goth2018::engine
 			using drawable_entity_contract = goth2018::engine::entity::contracts::drawable;
 			entities.for_each_entities(drawable_entity_contract{}, [&window](auto & entity, auto & position, auto & rendering)
 			{
-				//rendering.drawable->setPosition(position.value);
+				rendering.setPosition(position);
 				window.draw(rendering);
 			});
 		}
