@@ -37,7 +37,7 @@ namespace goth2018::engine
 			{
 				next_second = clock_type::now() + 1s;
 				if (fps_counter != requiered_fps)
-					on_frame_drop();
+					on_frame_drop(requiered_fps, fps_counter);
 				per_second(fps_counter);
 				fps_counter = 0;
 			}
@@ -55,8 +55,8 @@ namespace goth2018::engine
 		per_frame_type per_frame = [](const duration_t &) {};
 		using per_seconds_type = std::function<void(std::size_t)>;
 		per_seconds_type per_second = [](std::size_t) {};
-		using on_frame_drop_type = std::function<void()>;
-		on_frame_drop_type on_frame_drop = []() {};
+		using on_frame_drop_type = std::function<void(std::size_t, std::size_t)>;
+		on_frame_drop_type on_frame_drop = [](std::size_t, std::size_t) {};
 
 	private:
 		duration_t elapsed_time;

@@ -28,9 +28,11 @@ namespace goth2018::engine
 		void run()
 		{
 			fps_manager frame_manager{ 60 };
-			frame_manager.on_frame_drop = []()
+			frame_manager.on_frame_drop = [](auto requiered_fps, auto last_second_fps)
 			{
-				std::cerr << "[goth2018]::[warning] : frame drop detected\n";
+				std::cerr
+					<< "[goth2018]::[warning] : frame drop detected : "
+					<< last_second_fps << " / " << requiered_fps << '\n';
 			};
 			frame_manager.per_second = [this](auto fps_per_second)
 			{
