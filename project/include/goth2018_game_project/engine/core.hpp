@@ -1,6 +1,8 @@
 #pragma once
 
 #include <goth2018_game_project/engine/scene.hpp>
+#include <goth2018_game_project/engine/fps_manager.hpp>
+
 #include <vector>
 #include <utility>
 
@@ -25,29 +27,26 @@ namespace goth2018::engine
 
 		void run()
 		{
-			using clock_t = std::chrono::steady_clock;
-			using duration_t = std::chrono::duration<long long, std::nano>;
-
-			static const std::size_t fps = 60;
-			static const duration_t frame_delay = duration_t{ 1s } / fps;
-			static auto time = clock_t::now();
-			duration_t elapsed_time;
+			fps_manager frame_manager{ 60 };
+			frame_manager.on_frame_drop = []()
+			{
+				std::cerr << "[goth2018]::[warning] : frame drop detected\n";
+			};
+			frame_manager.per_second = [this](auto fps_per_second)
+			{
+				window.setTitle(active_scene_ptr->name + " : " + std::to_string(fps_per_second) + " fps");
+			};
+			frame_manager.per_frame = [this](const auto & elapsed_time)
+			{
+				input();
+				update();
+				render_once();
+			};
 
 			is_running = true;
 			while (is_running)
 			{
-				elapsed_time = clock_t::now() - time;
-				if (elapsed_time < frame_delay) // handle fps excess
-					std::this_thread::sleep_for(frame_delay - elapsed_time);
-				//else if (elapsed_time > frame_delay)
-				//{	// todo
-				//	std::cout << "fps drop : " << (frame_delay - elapsed_time).count() << " us\n";
-				//}
-				time = clock_t::now();
-
-				input();
-				update();
-				render_once();
+				frame_manager.update(); // tick
 			}
 		}
 		void stop()
