@@ -20,16 +20,12 @@
 #include <goth2018_game_project/configuration.hpp>
 #include <goth2018_game_project/engine/core.hpp>
 
-// todo contracts  :
-//		  property -> exposure
-//      + concept -> contract-accessor ?
-
 #include <goth2018_game_project/game_implementation/scene/space_map.hpp>
 #include <goth2018_game_project/game_implementation/scene/exploration.hpp>
 
 #include <gcl_cpp/container/utility.hpp>
 
-int main()
+auto main() -> int
 {
 	try
 	{

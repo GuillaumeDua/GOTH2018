@@ -114,7 +114,7 @@ namespace goth2018::engine
 				ImGui::PushID(scene.name.c_str());
 				ImGui::BeginGroup();
 				if (ImGui::Button(scene.name.c_str()))	// ImageButton?
-				{
+				{	// concurrency
 					active_scene_ptr = &scene;
 				}
 				ImGui::EndGroup();

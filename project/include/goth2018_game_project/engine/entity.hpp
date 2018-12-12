@@ -7,7 +7,7 @@
 
 namespace goth2018::engine::entity
 {
-	struct components
+	namespace components
 	{
 		struct position
 		{
@@ -26,13 +26,33 @@ namespace goth2018::engine::entity
 			float width, height;
 		};
 		using rendering = sf::Sprite;
+		struct on_click
+		{
+			using function_type = std::function<void()>;
+			function_type clicked;
+
+			std::invoke_result_t<decltype(clicked)> operator()()
+			{
+				std::invoke(clicked);
+			}
+			std::invoke_result_t<const decltype(clicked)> operator()() const
+			{
+				std::invoke(clicked);
+			}
+		};
 	};
-	struct contracts
+	namespace contracts
 	{
 		using drawable = gcl::pattern::ecs::contract
 		<
 			components::position,
 			components::rendering
+		>;
+		using clickable = gcl::pattern::ecs::contract
+		<
+			components::position,
+			components::size,
+			components::on_click
 		>;
 	};
 
@@ -40,7 +60,8 @@ namespace goth2018::engine::entity
 	<
 		components::position,
 		components::size,
-		components::rendering
+		components::rendering,
+		components::on_click
 	>;
 	using type = manager_type::entity_type;
 }

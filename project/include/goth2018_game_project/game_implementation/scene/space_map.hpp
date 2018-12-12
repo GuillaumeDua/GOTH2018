@@ -16,20 +16,22 @@ namespace goth2018::game_implementation::scenes
 		static auto generate()
 		{
 			goth2018::engine::scene space_map_scene{ "space", std::string{ goth2018::configuration::path::background } +"background.png" };
-			std::decay_t<decltype(space_map_scene.event_handlers)> event_handlers
-			{
+			{	// events
+				std::decay_t<decltype(space_map_scene.event_handlers)> event_handlers
 				{
-					sf::Event::EventType::MouseButtonPressed,
-					[](const sf::Event & ev, decltype(space_map_scene) &)
 					{
-						std::cout
-							<< ev.mouseButton.button << " => "
-							<< ev.mouseButton.x << " x " << ev.mouseButton.y
-							<< std::endl;
+						sf::Event::EventType::MouseButtonPressed,
+						[](const auto & ev, auto&)
+						{
+							std::cout
+								<< ev.mouseButton.button << " => "
+								<< ev.mouseButton.x << " x " << ev.mouseButton.y
+								<< std::endl;
+						}
 					}
-				}
-			};
-			space_map_scene.event_handlers = std::move(event_handlers);
+				};
+				space_map_scene.event_handlers.merge(event_handlers);
+			}
 
 			auto planet_sprites = graphics::spritesheet
 			{
@@ -44,46 +46,38 @@ namespace goth2018::game_implementation::scenes
 				sprite.setScale(0.2f, 0.2f);
 			}
 
-			for (auto counter = 0; counter < 5; ++counter)
-			{
-				std::mt19937 rng;
-				rng.seed(std::random_device()());
-				std::uniform_int_distribution<std::mt19937::result_type> distribution(0, 14);
+			std::mt19937 rng;
+			rng.seed(std::random_device()());
+			std::uniform_int_distribution<std::mt19937::result_type> distribution(0, 14);
 
-				space_map_scene.entities.create_entity
-				<
-					goth2018::engine::entity::components::position,
-					goth2018::engine::entity::components::size,
-					goth2018::engine::entity::components::rendering
-				>
-				(
-					goth2018::engine::entity::components::position{ 50.f + counter * 100.f, 50.f },
-					goth2018::engine::entity::components::size{ 384.f, 384.f },
-					planet_sprites.at(distribution(rng))
-				);
-				space_map_scene.entities.create_entity
-				<
-					goth2018::engine::entity::components::position,
-					goth2018::engine::entity::components::size,
-					goth2018::engine::entity::components::rendering
-				>
-				(
-					goth2018::engine::entity::components::position{ 50.f + counter * 100.f, 150.f },
-					goth2018::engine::entity::components::size{ 384.f, 384.f },
-					planet_sprites.at(distribution(rng))
-				);
-				space_map_scene.entities.create_entity
-				<
-					goth2018::engine::entity::components::position,
-					goth2018::engine::entity::components::size,
-					goth2018::engine::entity::components::rendering
-				>
-				(
-					goth2018::engine::entity::components::position{ 50.f + counter * 100.f, 250.f },
-					goth2018::engine::entity::components::size{ 384.f, 384.f },
-					planet_sprites.at(distribution(rng))
-				);
+			for (auto column_counter = 0; column_counter < 5; ++column_counter)
+			{	// 5 columns
+				for (auto row_counter = 0; row_counter < 3; ++row_counter)
+				{	// 3 rows
+					auto [entity, components] = space_map_scene.entities.create_entity
+					<
+						goth2018::engine::entity::components::position,
+						goth2018::engine::entity::components::size,
+						goth2018::engine::entity::components::rendering
+					>
+					(
+						goth2018::engine::entity::components::position{ 50.f + column_counter * 150.f, 50.f + (100.f * row_counter) },
+						goth2018::engine::entity::components::size{ 384.f / 5, 384.f / 5 }, // scale is 0.2f
+						planet_sprites.at(distribution(rng))
+					);
+
+					space_map_scene.entities.entity_add_component<goth2018::engine::entity::components::on_click>(entity, []()
+					{
+						std::cout << "clicked\n";
+					});
+				}
 			}
+
+			using position_contract = gcl::pattern::ecs::contract<goth2018::engine::entity::components::position>;
+			space_map_scene.entities.for_each_entities(position_contract{}, [](const auto & entity, const auto & pos)
+			{
+				std::cout << entity << " -> " << static_cast<sf::Vector2f>(pos).x << ", " << static_cast<sf::Vector2f>(pos).y << std::endl;
+			});
 
 			return space_map_scene;
 		}
