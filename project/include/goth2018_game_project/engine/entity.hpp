@@ -54,6 +54,10 @@ namespace goth2018::engine::entity
 			components::size,
 			components::on_click
 		>;
+		using AI = gcl::pattern::ecs::contract
+		<
+			components::position
+		>;
 	};
 
 	using manager_type = gcl::pattern::ecs::manager
@@ -64,4 +68,9 @@ namespace goth2018::engine::entity
 		components::on_click
 	>;
 	using type = manager_type::entity_type;
+
+	namespace contracts
+	{
+		using everything = manager_type::contract_type;
+	}
 }

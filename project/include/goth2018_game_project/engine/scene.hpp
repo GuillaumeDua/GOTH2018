@@ -46,7 +46,14 @@ namespace goth2018::engine
 		}
 		void update()
 		{
+			if (on_entity_update == nullptr)
+				return;
 
+			using AI_entity_contract = goth2018::engine::entity::contracts::AI;
+			entities.for_each_entities(AI_entity_contract{}, [this](auto & entity, auto & position)
+			{
+				on_entity_update(entity, std::forward_as_tuple(position));
+			});
 		}
 		void dispatch_event(sf::Event & event)
 		{
@@ -81,6 +88,12 @@ namespace goth2018::engine
 			}
 		};
 		goth2018::engine::entity::manager_type entities{ 10 };
+		using entity_update_type = std::function<void
+		(
+			goth2018::engine::entity::manager_type::entity_type &,
+			goth2018::engine::entity::contracts::AI::parameters
+		)>;
+		entity_update_type on_entity_update;
 
 	private:
 		const menu_drawer_type menu_drawer;

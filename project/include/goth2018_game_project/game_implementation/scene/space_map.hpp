@@ -44,6 +44,8 @@ namespace goth2018::game_implementation::scenes
 			for (auto & sprite : planet_sprites)
 			{
 				sprite.setScale(0.2f, 0.2f);
+				sprite.setOrigin(50.f, 50.f);
+				sprite.setRotation(90.f);
 			}
 
 			std::mt19937 rng;
@@ -68,16 +70,10 @@ namespace goth2018::game_implementation::scenes
 
 					space_map_scene.entities.entity_add_component<goth2018::engine::entity::components::on_click>(entity, []()
 					{
-						std::cout << "clicked\n";
+						std::cout << "clicked element\n";
 					});
 				}
 			}
-
-			using position_contract = gcl::pattern::ecs::contract<goth2018::engine::entity::components::position>;
-			space_map_scene.entities.for_each_entities(position_contract{}, [](const auto & entity, const auto & pos)
-			{
-				std::cout << entity << " -> " << static_cast<sf::Vector2f>(pos).x << ", " << static_cast<sf::Vector2f>(pos).y << std::endl;
-			});
 
 			return space_map_scene;
 		}
