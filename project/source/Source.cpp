@@ -23,8 +23,6 @@
 #include <goth2018_game_project/game_implementation/scene/space_map.hpp>
 #include <goth2018_game_project/game_implementation/scene/exploration.hpp>
 
-#include <gcl_cpp/container/utility.hpp>
-
 auto main() -> int
 {
 	try
@@ -35,19 +33,13 @@ auto main() -> int
 		goth2018::engine::core system
 		{
 			window,
-			gcl::container::make_vector<goth2018::engine::scene>
-			(
-				goth2018::game_implementation::scenes::space_map::generate(),
-				goth2018::game_implementation::scenes::exploration::generate()
+			std::make_tuple
+			(	// scenes
+				goth2018::game_implementation::scenes::space_map{},
+				goth2018::game_implementation::scenes::exploration{}
 			)
 		};
 		system.run();
-
-		//gcl::test::components
-		//<
-		//	goth2018::test::graphics::texture_iterator,
-		//	goth2018::test::entity
-		//>::test();
 	}
 	catch (const std::exception & ex)
 	{

@@ -16,6 +16,7 @@ namespace goth2018::engine
 		using menu_drawer_type = std::function<void()>;
 		using event_handler_type = std::function<void(const sf::Event&, scene&)>;
 		using event_handlers_container_type = std::unordered_multimap<sf::Event::EventType, event_handler_type>;
+		using entity_manager_type = goth2018::engine::entity::manager_type;
 
 		scene(const scene &) = delete; // for std::vector initializer_list
 		scene(scene &&) = default;
@@ -87,10 +88,10 @@ namespace goth2018::engine
 				}
 			}
 		};
-		goth2018::engine::entity::manager_type entities{ 10 };
+		entity_manager_type entities{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation.
 		using entity_update_type = std::function<void
 		(
-			goth2018::engine::entity::manager_type::entity_type &,
+			entity_manager_type::entity_type &,
 			goth2018::engine::entity::contracts::AI::parameters
 		)>;
 		entity_update_type on_entity_update;

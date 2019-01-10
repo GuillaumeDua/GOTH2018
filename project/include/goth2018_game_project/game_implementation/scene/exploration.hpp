@@ -7,9 +7,9 @@
 
 namespace goth2018::game_implementation::scenes
 {
-	namespace exploration
+	struct exploration
 	{
-		namespace control
+		struct control
 		{
 			static void draw_exploration_menu()
 			{
@@ -26,7 +26,7 @@ namespace goth2018::game_implementation::scenes
 				ImGui::SliderFloat("float", &f, 0.0f, 1.0f);
 				ImGui::End();
 			}
-		}
+		};
 
 		static auto generate()
 			-> goth2018::engine::scene
@@ -75,5 +75,5 @@ namespace goth2018::game_implementation::scenes
 
 			return scene;
 		}
-	}
+	};
 }
