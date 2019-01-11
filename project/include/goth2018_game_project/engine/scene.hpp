@@ -55,6 +55,7 @@ namespace goth2018::engine
 			{
 				on_entity_update(entity, std::forward_as_tuple(position));
 			});
+			entities.reorder(); // on_entity_update could add / remove entities
 		}
 		void dispatch_event(sf::Event & event)
 		{
@@ -63,6 +64,7 @@ namespace goth2018::engine
 			{
 				event_handler_it->second(event, *this);
 			}
+			entities.reorder(); // event handlers could add / remove entities
 		}
 
 		const std::string name;
