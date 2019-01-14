@@ -2,7 +2,6 @@
 
 #include <goth2018_game_project/graphics/graphics.hpp>
 #include <goth2018_game_project/engine/entity.hpp>
-#include <goth2018_game_project/engine/collision.hpp>
 #include <gcl_cpp/pattern/ecs.hpp>
 
 #include <functional>
@@ -47,15 +46,9 @@ namespace goth2018::engine
 		}
 		void update()
 		{
-			if (on_entity_update == nullptr)
-				return;
-
-			using AI_entity_contract = goth2018::engine::entity::contracts::AI;
-			entities.for_each_entities(AI_entity_contract{}, [this](auto & entity, auto & position)
-			{
-				on_entity_update(entity, std::forward_as_tuple(position));
-			});
-			entities.reorder(); // on_entity_update could add / remove entities
+			if (on_update)
+				on_update();
+			update_entities();
 		}
 		void dispatch_event(sf::Event & event)
 		{
@@ -69,27 +62,8 @@ namespace goth2018::engine
 
 		const std::string name;
 		const sf::Sprite background;
-		event_handlers_container_type event_handlers
-		{
-			{
-				sf::Event::MouseButtonPressed,
-				[](const sf::Event & ev, scene & current_scene)
-				{
-					using clickable_entities = goth2018::engine::entity::contracts::clickable;
-					current_scene.entities.for_each_entities(clickable_entities{}, [&ev](auto & entity, auto & position, auto & size, auto & on_click)
-					{
-						// todo : if constexpr decltype(size) -> rectlangle or circle shape
+		event_handlers_container_type event_handlers;
 
-						const auto mouse_position = collision::position_type{ ev.mouseButton.x, ev.mouseButton.y };
-						using collision_algorithm = goth2018::engine::collision::algorithm::rectangle_shape;
-						if (collision_algorithm::is_collision(std::forward_as_tuple(position, size), mouse_position))
-						{
-							on_click();
-						}
-					});
-				}
-			}
-		};
 		entity_manager_type entities{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation.
 		using entity_update_type = std::function<void
 		(
@@ -98,7 +72,22 @@ namespace goth2018::engine
 		)>;
 		entity_update_type on_entity_update;
 
+		using on_update_type = std::function<void()>;
+		on_update_type on_update;
 	private:
+		void update_entities()
+		{
+			if (on_entity_update == nullptr)
+				return;
+
+			using AI_entity_contract = goth2018::engine::entity::contracts::AI;
+			entities.for_each_entities(AI_entity_contract{}, [this](auto & entity, auto & position)
+			{
+				on_entity_update(entity, std::forward_as_tuple(position));
+			});
+			entities.reorder(); // on_entity_update could add / remove entities
+		}
+
 		const menu_drawer_type menu_drawer;
 	};
 }

@@ -9,6 +9,8 @@
 #include <algorithm>
 #include <random>
 
+#include <goth2018_game_project/game_implementation/scene_event_handlers.hpp>
+
 namespace goth2018::game_implementation::scenes
 {
 	struct space_map
@@ -28,6 +30,10 @@ namespace goth2018::game_implementation::scenes
 								<< ev.mouseButton.x << " x " << ev.mouseButton.y
 								<< std::endl;
 						}
+					},
+					{
+						sf::Event::EventType::MouseButtonPressed,
+						goth2018::game_implementation::event::handler::broadcast_clicked_entity()
 					}
 				};
 				space_map_scene.event_handlers.merge(event_handlers);
@@ -62,27 +68,28 @@ namespace goth2018::game_implementation::scenes
 				for (auto row_counter = 0; row_counter < 3; ++row_counter)
 				{	// 3 rows
 					auto[entity, components] = entity_manager.create_entity
-						<
+					<
 						goth2018::engine::entity::components::position,
 						goth2018::engine::entity::components::size,
 						goth2018::engine::entity::components::rendering
-						>
-						(
-							goth2018::engine::entity::components::position{ 50.f + column_counter * 150.f, 50.f + (100.f * row_counter) },
-							goth2018::engine::entity::components::size{ 384.f / 5, 384.f / 5 }, // scale is 0.2f
-							planet_sprites.at(distribution(rng))
-							);
+					>
+					(
+						goth2018::engine::entity::components::position{ 50.f + column_counter * 150.f, 50.f + (100.f * row_counter) },
+						goth2018::engine::entity::components::size{ 384.f / 5, 384.f / 5 }, // scale is 0.2f
+						planet_sprites.at(distribution(rng))
+					);
 
-					/*space_map_scene.entities.entity_add_component<goth2018::engine::entity::components::on_click>(entity, []()
+					entity_manager.entity_add_component<goth2018::engine::entity::components::on_click>(entity, [entity_persistent_id = entity.persistent_id, &entity_manager]()
 					{
-						std::cout << "clicked element\n";
-					});*/
-					entity_manager.entity_add_component<goth2018::engine::entity::components::on_click>(entity, [entity_id = entity.id, &entity_manager]()
-					{
-						std::cout << "clicked element : " << entity_id << "\n";
+						auto entity_id = entity_manager.convert_to_index(entity_persistent_id);
+						auto & entity = entity_manager.entity_at(entity_id);
 
-						auto rendering_component = entity_manager.entity_get_component<goth2018::engine::entity::components::rendering>(entity_id);
+						std::cout << "clicked element : {" << entity_id << ", " << entity_persistent_id << "}\n";
+
+						auto & rendering_component = entity_manager.entity_get_component<goth2018::engine::entity::components::rendering>(entity_id);
 						rendering_component.setColor(sf::Color::Red);
+
+						// entity_manager.destroy_entity(entity); // tmp : for test purpose only
 					});
 				}
 			}

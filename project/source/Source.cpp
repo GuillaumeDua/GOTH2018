@@ -22,6 +22,7 @@
 
 #include <goth2018_game_project/game_implementation/scene/space_map.hpp>
 #include <goth2018_game_project/game_implementation/scene/exploration.hpp>
+#include <goth2018_game_project/game_implementation/scene/stars_view.hpp>
 
 auto main() -> int
 {
@@ -36,7 +37,8 @@ auto main() -> int
 			std::make_tuple
 			(	// scenes
 				goth2018::game_implementation::scenes::space_map{},
-				goth2018::game_implementation::scenes::exploration{}
+				goth2018::game_implementation::scenes::exploration{},
+				goth2018::game_implementation::scenes::stars_view{}
 			)
 		};
 		system.run();
