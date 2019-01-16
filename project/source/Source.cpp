@@ -24,6 +24,8 @@
 #include <goth2018_game_project/game_implementation/scene/exploration.hpp>
 #include <goth2018_game_project/game_implementation/scene/stars_view.hpp>
 
+#include <gcl_cpp/container/utility.hpp>
+
 auto main() -> int
 {
 	try
@@ -31,16 +33,20 @@ auto main() -> int
 		std::cout << "[+] Loading ressources from : [" << goth2018::configuration::path::ressources << ']' << std::endl;
 
 		goth2018::graphics::window window{ {800, 600}, "GOTH2018 : game window" };
+
+		auto scenes = gcl::container::make_vector<goth2018::engine::scene>
+		(
+			goth2018::game_implementation::scenes::space_map::generate(),
+			goth2018::game_implementation::scenes::exploration::generate(),
+			goth2018::game_implementation::scenes::stars_view::generate()
+		);
+
 		goth2018::engine::core system
 		{
 			window,
-			std::make_tuple
-			(	// scenes
-				goth2018::game_implementation::scenes::space_map{},
-				goth2018::game_implementation::scenes::exploration{},
-				goth2018::game_implementation::scenes::stars_view{}
-			)
+			std::move(scenes)
 		};
+
 		system.run();
 	}
 	catch (const std::exception & ex)

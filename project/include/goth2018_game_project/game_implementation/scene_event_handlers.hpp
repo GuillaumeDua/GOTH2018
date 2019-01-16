@@ -11,8 +11,8 @@ namespace goth2018::game_implementation::event::handler
 	{
 		return [](const sf::Event & ev, auto & current_scene)
 		{
-			using clickable_entities = goth2018::engine::entity::contracts::clickable;
-			current_scene.entities.for_each_entities(clickable_entities{}, [&ev](auto & entity, auto & position, auto & size, auto & on_click)
+			using clickable_entities = goth2018::game_implementation::entity::contracts::clickable;
+			current_scene.entity_manager.for_each_entities(clickable_entities{}, [&ev, &current_scene](auto & entity, auto & position, auto & size, auto & on_click)
 			{
 				// todo : if constexpr decltype(size) -> rectlangle or circle shape
 
@@ -20,7 +20,7 @@ namespace goth2018::game_implementation::event::handler
 				using collision_algorithm = goth2018::engine::collision::algorithm::rectangle_shape;
 				if (collision_algorithm::is_collision(std::forward_as_tuple(position, size), mouse_position))
 				{
-					on_click();
+					on_click(entity, current_scene);
 				}
 			});
 		};

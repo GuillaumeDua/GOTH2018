@@ -59,15 +59,15 @@ namespace goth2018::game_implementation::scenes
 			std::uniform_int_distribution<std::mt19937::result_type> x_distribution(0, 700);
 			std::uniform_int_distribution<std::mt19937::result_type> y_distribution(0, 500);
 
-			scene.entities.create_entity
+			scene.entity_manager.create_entity
 			<
-				goth2018::engine::entity::components::position,
-				goth2018::engine::entity::components::size,
-				goth2018::engine::entity::components::rendering
+				goth2018::game_implementation::entity::components::position,
+				goth2018::game_implementation::entity::components::size,
+				goth2018::game_implementation::entity::components::rendering
 			>
 			(
-				goth2018::engine::entity::components::position{ (float)x_distribution(rng), (float)y_distribution(rng) },
-				goth2018::engine::entity::components::size{ 384.f / 5, 384.f / 5 }, // scale is 0.2f
+				goth2018::game_implementation::entity::components::position{ (float)x_distribution(rng), (float)y_distribution(rng) },
+				goth2018::game_implementation::entity::components::size{ 384.f / 5, 384.f / 5 }, // scale is 0.2f
 				planet_sprites.at(sprite_distribution(rng))
 			);
 

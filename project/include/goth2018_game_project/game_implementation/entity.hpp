@@ -10,7 +10,7 @@ namespace goth2018::engine
 	struct scene;
 }
 
-namespace goth2018::game_implementation::entity
+namespace goth2018::engine::entity
 {
 	namespace components
 	{
