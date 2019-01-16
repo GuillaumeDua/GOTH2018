@@ -18,12 +18,12 @@ namespace goth2018::game_implementation::scenes
 		{
 			using ECS_manager_type = typename goth2018::game_implementation::entity::manager_type;
 			using scene_type = goth2018::engine::scene<ECS_manager_type>;
-			scene_type space_map_scene{ "space", std::string{ goth2018::configuration::path::background } +"background.png" };
+			scene_type scene{ "space", std::string{ goth2018::configuration::path::background } +"background.png" };
 			{	// events
 
 				using event_handler_type = goth2018::game_implementation::event::handler<goth2018::game_implementation::entity::manager_type>;
 
-				std::decay_t<decltype(space_map_scene.event_handlers)> event_handlers
+				std::decay_t<decltype(scene.event_handlers)> event_handlers
 				{
 					{
 						sf::Event::EventType::MouseButtonPressed,
@@ -40,8 +40,13 @@ namespace goth2018::game_implementation::scenes
 						event_handler_type::broadcast_clicked_entity()
 					}
 				};
-				space_map_scene.event_handlers.merge(event_handlers);
+				scene.event_handlers.merge(event_handlers);
 			}
+			scene.entity_operator = decltype(scene.entity_operator)
+			{
+				game_implementation::entity::operations::draw{},
+					game_implementation::entity::operations::update{}
+			};
 
 			auto planet_sprites = graphics::spritesheet
 			{
@@ -66,7 +71,7 @@ namespace goth2018::game_implementation::scenes
 			{	// 5 columns
 				for (auto row_counter = 0; row_counter < 3; ++row_counter)
 				{	// 3 rows
-					auto[entity, components] = space_map_scene.entity_manager.create_entity
+					auto[entity, components] = scene.entity_manager.create_entity
 					<
 						goth2018::game_implementation::entity::components::position,
 						goth2018::game_implementation::entity::components::size,
@@ -90,7 +95,7 @@ namespace goth2018::game_implementation::scenes
 				}
 			}
 
-			return space_map_scene;
+			return scene;
 		}
 	};
 }

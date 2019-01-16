@@ -43,7 +43,7 @@
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene_event_handlers.hpp">
       <Filter>include\goth2018_game_project\game_implementation</Filter>
     </ClInclude>
-    <ClInclude Include="include\goth2018_game_project\engine\entity.hpp">
+    <ClInclude Include="include\goth2018_game_project\game_implementation\entity.hpp">
       <Filter>include\goth2018_game_project\game_implementation</Filter>
     </ClInclude>
   </ItemGroup>

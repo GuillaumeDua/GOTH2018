@@ -9,12 +9,25 @@
 namespace goth2018::engine
 {
 	template <class ECS_manager_type>
+	struct ECS_EM_operator
+	{	// entity manager operator
+		// define ways to interact with an ECS EM
+
+		using draw_operation_type = std::function<void(ECS_manager_type & entity_manager, sf::RenderWindow & window)>;
+		draw_operation_type draw;
+
+		using update_operation_type = std::function<void(ECS_manager_type & entity_manager)>;
+		update_operation_type update;
+	};
+
+	template <class ECS_manager_type>
 	struct scene
 	{
 		using menu_drawer_type = std::function<void()>;
 		using event_handler_type = std::function<void(const sf::Event&, scene<ECS_manager_type>&)>; // todo : entity_manager instead of scene ?
 		using event_handlers_container_type = std::unordered_multimap<sf::Event::EventType, event_handler_type>;
 		using entity_manager_type = ECS_manager_type;
+		using ECS_EM_operator_type = ECS_EM_operator<ECS_manager_type>;
 
 		scene(const scene &) = delete; // for std::vector initializer_list
 		scene(scene &&) = default;
@@ -30,25 +43,21 @@ namespace goth2018::engine
 			, name{ std::forward<std::string>(scene_name) }
 		{}
 
+		void update()
+		{
+			if (entity_operator.update)
+				entity_operator.update(entity_manager);
+		}
+
 		void draw(sf::RenderWindow & window)
 		{
 			window.draw(background);
 			menu_drawer();
 
-			//using drawable_entity_contract = goth2018::game_implementation::entity::contracts::drawable;
-			//entity_manager.for_each_entities(drawable_entity_contract{}, [&window](auto & entity, auto & position, auto & rendering)
-			//{
-			//	// todo : debug_warning : calc AABB window and position
-			//	rendering.setPosition(position);
-			//	window.draw(rendering);
-			//});
+			if (entity_operator.draw)
+				entity_operator.draw(entity_manager, window);
 		}
-		void update()
-		{
-			if (on_update)
-				on_update();
-			// update_entities();
-		}
+
 		void dispatch_event(sf::Event & event)
 		{
 			auto match = event_handlers.equal_range(event.type);
@@ -62,32 +71,10 @@ namespace goth2018::engine
 		const std::string name;
 		const sf::Sprite background;
 		event_handlers_container_type event_handlers;
-
 		entity_manager_type entity_manager{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation. // todo : extend default capacity
-		/*using entity_update_type = std::function<void
-		(
-			entity_manager_type::entity_type &,
-			goth2018::game_implementation::entity::contracts::AI::parameters
-		)>;
-		entity_update_type on_entity_update;*/
-
-		using on_update_type = std::function<void()>;
-		on_update_type on_update;
+		ECS_EM_operator_type entity_operator;
 
 	private:
-		//void update_entities()
-		//{	// todo : check interface
-		//	if (on_entity_update == nullptr)
-		//		return;
-
-		//	using AI_entity_contract = goth2018::game_implementation::entity::contracts::AI;
-		//	entity_manager.for_each_entities(AI_entity_contract{}, [this](auto & entity, auto & position)
-		//	{
-		//		on_entity_update(entity, std::forward_as_tuple(position));
-		//	});
-		//	entity_manager.reorder(); // on_entity_update could add / remove entities
-		//}
-
 		const menu_drawer_type menu_drawer;
 	};
 }

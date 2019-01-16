@@ -69,8 +69,36 @@ namespace goth2018::game_implementation::entity
 	>;
 	using type = manager_type::entity_type;
 
-	namespace contracts
+	namespace operations
 	{
-		using everything = manager_type::contract_type;
+		struct draw
+		{
+			void operator()(manager_type & entity_manager, sf::RenderWindow & window) const
+			{
+				using drawable_entity_contract = goth2018::game_implementation::entity::contracts::drawable;
+				entity_manager.for_each_entities(drawable_entity_contract{}, [&window](auto & entity, auto & position, auto & rendering)
+				{
+					// todo : debug_warning : calc AABB window and position, warning when OOB
+					rendering.setPosition(position);
+					window.draw(rendering);
+				});
+			}
+		};
+		struct update
+		{
+			void operator()(manager_type & entity_manager) const
+			{	// todo : check interface
+				using AI_entity_contract = goth2018::game_implementation::entity::contracts::AI;
+				entity_manager.for_each_entities(AI_entity_contract{}, [](auto & entity, auto & position)
+				{
+					// test AI
+					position.x += 1.f;
+					position.y += 1.f;
+
+					// todo : different AIs with a std::variant<AIs...>
+				});
+				entity_manager.reorder(); // on_entity_update could add / remove entities
+			}
+		};
 	}
 }

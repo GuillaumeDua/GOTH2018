@@ -37,6 +37,11 @@ namespace goth2018::game_implementation::scenes
 				std::string{goth2018::configuration::path::background} +"planet_cartoon_landscape.png",
 				[]() { control::draw_exploration_menu(); }
 			};
+			scene.entity_operator = decltype(scene.entity_operator)
+			{
+				game_implementation::entity::operations::draw{},
+				game_implementation::entity::operations::update{}
+			};
 
 			// -- test --
 

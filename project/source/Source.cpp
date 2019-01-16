@@ -53,6 +53,9 @@ auto main() -> int
 			std::move(scenes)
 		};
 
+		// todo : behaviors
+
+
 		system.run();
 	}
 	catch (const std::exception & ex)

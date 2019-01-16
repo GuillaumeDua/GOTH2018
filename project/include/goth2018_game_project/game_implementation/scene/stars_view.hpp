@@ -60,9 +60,9 @@ namespace goth2018::game_implementation::scenes
 		static auto generate()
 		{
 			using scene_type = goth2018::engine::scene<game_implementation::entity::manager_type>;
-			auto stars_view_scene = scene_type{ "stars_view", std::string{ goth2018::configuration::path::background } +"background.png" };
+			auto scene = scene_type{ "stars_view", std::string{ goth2018::configuration::path::background } +"background.png" };
 			{	// events
-				std::decay_t<decltype(stars_view_scene.event_handlers)> event_handlers
+				std::decay_t<decltype(scene.event_handlers)> event_handlers
 				{
 					{
 						sf::Event::EventType::MouseButtonPressed,
@@ -75,12 +75,12 @@ namespace goth2018::game_implementation::scenes
 						}
 					}
 				};
-				stars_view_scene.event_handlers.merge(event_handlers);
+				scene.event_handlers.merge(event_handlers);
 			}
-
-			stars_view_scene.on_update = []()
+			scene.entity_operator = decltype(scene.entity_operator)
 			{
-				
+				game_implementation::entity::operations::draw{},
+					game_implementation::entity::operations::update{}
 			};
 
 			star_factory factory;
@@ -88,13 +88,13 @@ namespace goth2018::game_implementation::scenes
 			auto start = std::chrono::system_clock::now();
 
 			for (std::size_t i = 0; i < 10000; ++i)
-				factory.generate_one_entity(stars_view_scene.entity_manager);
+				factory.generate_one_entity(scene.entity_manager);
 
 			auto end = std::chrono::system_clock::now();
 			std::chrono::duration<double> elapsed_seconds = end - start;
 			std::cout << "elapsed time: " << elapsed_seconds.count() << "s\n";
 
-			return stars_view_scene;
+			return scene;
 		}
 	};
 }
