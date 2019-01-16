@@ -9,14 +9,6 @@
 #include <gcl_cpp/introspection.hpp>
 #include <gcl_cpp/tuple_utils.hpp>
 
-//	scene_generators_contract
-//	{
-//		`- [mandatory] generate() -> scene
-//		`- [optional]  entities_generator(scene::entitiy_manager_type&) -> void
-//	}
-
-GCL_Introspection_Generate__has_member_function(entities_generator);
-
 namespace goth2018::engine
 {
 	// todo : expose data_context + serializer
@@ -34,25 +26,6 @@ namespace goth2018::engine
 			if (scenes.size() == 0)
 				throw std::runtime_error{ "goth2018::graphics::core::ctor : no scenes" };
 			active_scene_ptr = &(*std::begin(scenes));
-		}
-
-		template <class ... scenes_type>
-		core(sf::RenderWindow & render_window, std::tuple<scenes_type...>)
-			: window{ render_window }
-			, scenes{ gcl::container::make_vector<goth2018::engine::scene>(std::forward<goth2018::engine::scene>(scenes_type::generate())...) }
-		{	// construct with scenes_generators
-			if (scenes.size() == 0)
-				throw std::runtime_error{ "goth2018::graphics::core::ctor : no scenes" };
-			active_scene_ptr = &(*std::begin(scenes));
-
-			gcl::tuple_utils::for_each_with_index(std::tuple<scenes_type...>{}, [this](auto index, auto & arg)
-			{
-				using arg_type = std::decay_t<decltype(arg)>;
-				if constexpr (gcl::introspection::generated::has_member_function::entities_generator<arg_type>::value)
-				{
-					arg_type::entities_generator(scenes.at(index).entities);
-				}
-			});
 		}
 
 		void run()

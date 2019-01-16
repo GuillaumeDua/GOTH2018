@@ -5,6 +5,11 @@
 
 #include <functional>
 
+namespace goth2018::engine
+{
+	struct scene;
+}
+
 namespace goth2018::engine::entity
 {
 	namespace components
@@ -28,16 +33,16 @@ namespace goth2018::engine::entity
 		using rendering = sf::Sprite;
 		struct on_click
 		{
-			using function_type = std::function<void()>;
+			using function_type = std::function<void(gcl::pattern::ecs::id_type, goth2018::engine::scene &)>;	// todo : not scene but entity_manager_type
 			function_type clicked;
 
-			std::invoke_result_t<decltype(clicked)> operator()()
-			{
-				std::invoke(clicked);
+			void operator()(gcl::pattern::ecs::id_type this_entity_id, goth2018::engine::scene & scene)
+			{	// /*std::invoke_result_t<decltype(clicked)>*/
+				std::invoke(clicked, this_entity_id, scene);
 			}
-			std::invoke_result_t<const decltype(clicked)> operator()() const
+			void operator()(gcl::pattern::ecs::id_type this_entity_id, goth2018::engine::scene & scene) const
 			{
-				std::invoke(clicked);
+				std::invoke(clicked, this_entity_id, scene);
 			}
 		};
 	};

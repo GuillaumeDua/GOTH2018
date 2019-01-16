@@ -37,7 +37,7 @@ namespace goth2018::engine
 			menu_drawer();
 
 			using drawable_entity_contract = goth2018::engine::entity::contracts::drawable;
-			entities.for_each_entities(drawable_entity_contract{}, [&window](auto & entity, auto & position, auto & rendering)
+			entity_manager.for_each_entities(drawable_entity_contract{}, [&window](auto & entity, auto & position, auto & rendering)
 			{
 				// todo : debug_warning : calc AABB window and position
 				rendering.setPosition(position);
@@ -57,14 +57,14 @@ namespace goth2018::engine
 			{
 				event_handler_it->second(event, *this);
 			}
-			entities.reorder(); // event handlers could add / remove entities
+			entity_manager.reorder(); // event handlers could add / remove entities
 		}
 
 		const std::string name;
 		const sf::Sprite background;
 		event_handlers_container_type event_handlers;
 
-		entity_manager_type entities{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation.
+		entity_manager_type entity_manager{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation. // todo : extend default capacity
 		using entity_update_type = std::function<void
 		(
 			entity_manager_type::entity_type &,
@@ -74,18 +74,19 @@ namespace goth2018::engine
 
 		using on_update_type = std::function<void()>;
 		on_update_type on_update;
+
 	private:
 		void update_entities()
-		{
+		{	// todo : check interface
 			if (on_entity_update == nullptr)
 				return;
 
 			using AI_entity_contract = goth2018::engine::entity::contracts::AI;
-			entities.for_each_entities(AI_entity_contract{}, [this](auto & entity, auto & position)
+			entity_manager.for_each_entities(AI_entity_contract{}, [this](auto & entity, auto & position)
 			{
 				on_entity_update(entity, std::forward_as_tuple(position));
 			});
-			entities.reorder(); // on_entity_update could add / remove entities
+			entity_manager.reorder(); // on_entity_update could add / remove entities
 		}
 
 		const menu_drawer_type menu_drawer;
