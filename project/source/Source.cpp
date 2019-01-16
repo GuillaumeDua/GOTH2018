@@ -24,6 +24,8 @@
 #include <goth2018_game_project/game_implementation/scene/exploration.hpp>
 #include <goth2018_game_project/game_implementation/scene/stars_view.hpp>
 
+#include <goth2018_game_project/game_implementation/entity.hpp>
+
 #include <gcl_cpp/container/utility.hpp>
 
 auto main() -> int
@@ -34,14 +36,18 @@ auto main() -> int
 
 		goth2018::graphics::window window{ {800, 600}, "GOTH2018 : game window" };
 
-		auto scenes = gcl::container::make_vector<goth2018::engine::scene>
+		using ECS_manager_type = goth2018::game_implementation::entity::manager_type;
+
+		using scene_type = goth2018::engine::scene<ECS_manager_type>;
+		auto scenes = gcl::container::make_vector<scene_type>
 		(
 			goth2018::game_implementation::scenes::space_map::generate(),
 			goth2018::game_implementation::scenes::exploration::generate(),
 			goth2018::game_implementation::scenes::stars_view::generate()
 		);
 
-		goth2018::engine::core system
+		using core_type = goth2018::engine::core<ECS_manager_type>;
+		core_type system
 		{
 			window,
 			std::move(scenes)

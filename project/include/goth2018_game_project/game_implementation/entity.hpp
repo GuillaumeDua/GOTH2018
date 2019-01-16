@@ -5,12 +5,7 @@
 
 #include <functional>
 
-namespace goth2018::engine
-{
-	struct scene;
-}
-
-namespace goth2018::engine::entity
+namespace goth2018::game_implementation::entity
 {
 	namespace components
 	{
@@ -31,20 +26,20 @@ namespace goth2018::engine::entity
 			float width, height;
 		};
 		using rendering = sf::Sprite;
-		struct on_click
-		{
-			using function_type = std::function<void(gcl::pattern::ecs::id_type, goth2018::engine::scene &)>;	// todo : not scene but entity_manager_type
-			function_type clicked;
+		//struct on_click
+		//{
+		//	using function_type = std::function<void(gcl::pattern::ecs::id_type, goth2018::engine::scene &)>;	// todo : not scene but entity_manager_type
+		//	function_type clicked;
 
-			void operator()(gcl::pattern::ecs::id_type this_entity_id, goth2018::engine::scene & scene)
-			{	// /*std::invoke_result_t<decltype(clicked)>*/
-				std::invoke(clicked, this_entity_id, scene);
-			}
-			void operator()(gcl::pattern::ecs::id_type this_entity_id, goth2018::engine::scene & scene) const
-			{
-				std::invoke(clicked, this_entity_id, scene);
-			}
-		};
+		//	void operator()(gcl::pattern::ecs::id_type this_entity_id, goth2018::engine::scene & scene)
+		//	{	// /*std::invoke_result_t<decltype(clicked)>*/
+		//		std::invoke(clicked, this_entity_id, scene);
+		//	}
+		//	void operator()(gcl::pattern::ecs::id_type this_entity_id, goth2018::engine::scene & scene) const
+		//	{
+		//		std::invoke(clicked, this_entity_id, scene);
+		//	}
+		//};
 	};
 	namespace contracts
 	{
@@ -56,8 +51,8 @@ namespace goth2018::engine::entity
 		using clickable = gcl::pattern::ecs::contract
 		<
 			components::position,
-			components::size,
-			components::on_click
+			components::size/*,
+			components::on_click*/
 		>;
 		using AI = gcl::pattern::ecs::contract
 		<
@@ -65,12 +60,12 @@ namespace goth2018::engine::entity
 		>;
 	};
 
-	using manager_type = gcl::pattern::ecs::manager
+	using manager_type = typename gcl::pattern::ecs::manager
 	<
 		components::position,
 		components::size,
-		components::rendering,
-		components::on_click
+		components::rendering/*,
+		components::on_click*/
 	>;
 	using type = manager_type::entity_type;
 

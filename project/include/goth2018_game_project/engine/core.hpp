@@ -3,18 +3,20 @@
 #include <goth2018_game_project/engine/scene.hpp>
 #include <goth2018_game_project/engine/fps_manager.hpp>
 
-#include <vector>
-#include <utility>
-
 #include <gcl_cpp/introspection.hpp>
 #include <gcl_cpp/tuple_utils.hpp>
+
+#include <vector>
+#include <utility>
 
 namespace goth2018::engine
 {
 	// todo : expose data_context + serializer
+	template <class ECS_manager_type>
 	struct core
 	{
-		using scene_collection = std::vector<scene>;
+		using scene_type = scene<ECS_manager_type>;
+		using scene_collection = std::vector<scene_type>;
 
 		core(const core &) = delete;
 		core(core &&) = default;
@@ -131,7 +133,7 @@ namespace goth2018::engine
 	private:
 		sf::RenderWindow & window;
 		scene_collection scenes;
-		scene_collection::value_type * active_scene_ptr;
+		typename scene_collection::value_type * active_scene_ptr;
 		bool is_running = false;
 	};
 }

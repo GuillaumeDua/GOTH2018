@@ -29,10 +29,9 @@ namespace goth2018::game_implementation::scenes
 		};
 
 		static auto generate()
-			-> goth2018::engine::scene
 		{
-			
-			auto scene = goth2018::engine::scene
+			using scene_type = goth2018::engine::scene<game_implementation::entity::manager_type>;
+			auto scene = scene_type
 			{
 				"planet",
 				std::string{goth2018::configuration::path::background} +"planet_cartoon_landscape.png",

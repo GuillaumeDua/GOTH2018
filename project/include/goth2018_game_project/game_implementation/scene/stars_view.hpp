@@ -2,8 +2,9 @@
 
 #include <goth2018_game_project/engine/scene.hpp>
 #include <goth2018_game_project/configuration.hpp>
-#include <goth2018_game_project/engine/entity.hpp>
 #include <goth2018_game_project/graphics/graphics.hpp>
+
+#include <goth2018_game_project/game_implementation/entity.hpp>
 
 #include <iostream>
 #include <algorithm>
@@ -32,7 +33,7 @@ namespace goth2018::game_implementation::scenes
 			rng.seed(std::random_device()());
 		}
 
-		void generate_one_entity(goth2018::engine::scene::entity_manager_type & entity_manager)
+		void generate_one_entity(game_implementation::entity::manager_type & entity_manager)
 		{
 			auto[entity, components] = entity_manager.create_entity
 			<
@@ -58,7 +59,8 @@ namespace goth2018::game_implementation::scenes
 	{
 		static auto generate()
 		{
-			goth2018::engine::scene stars_view_scene{ "stars_view", std::string{ goth2018::configuration::path::background } +"background.png" };
+			using scene_type = goth2018::engine::scene<game_implementation::entity::manager_type>;
+			auto stars_view_scene = scene_type{ "stars_view", std::string{ goth2018::configuration::path::background } +"background.png" };
 			{	// events
 				std::decay_t<decltype(stars_view_scene.event_handlers)> event_handlers
 				{

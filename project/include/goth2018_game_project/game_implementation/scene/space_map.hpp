@@ -1,15 +1,14 @@
 #pragma once
 
+#include <goth2018_game_project/game_implementation/entity.hpp>
+#include <goth2018_game_project/game_implementation/scene_event_handlers.hpp>
+
 #include <goth2018_game_project/engine/scene.hpp>
-#include <goth2018_game_project/configuration.hpp>
-#include <goth2018_game_project/engine/entity.hpp>
 #include <goth2018_game_project/graphics/graphics.hpp>
 
 #include <iostream>
 #include <algorithm>
 #include <random>
-
-#include <goth2018_game_project/game_implementation/scene_event_handlers.hpp>
 
 namespace goth2018::game_implementation::scenes
 {
@@ -17,8 +16,13 @@ namespace goth2018::game_implementation::scenes
 	{
 		static auto generate()
 		{
-			goth2018::engine::scene space_map_scene{ "space", std::string{ goth2018::configuration::path::background } +"background.png" };
+			using ECS_manager_type = typename goth2018::game_implementation::entity::manager_type;
+			using scene_type = goth2018::engine::scene<ECS_manager_type>;
+			scene_type space_map_scene{ "space", std::string{ goth2018::configuration::path::background } +"background.png" };
 			{	// events
+
+				using event_handler_type = goth2018::game_implementation::event::handler<goth2018::game_implementation::entity::manager_type>;
+
 				std::decay_t<decltype(space_map_scene.event_handlers)> event_handlers
 				{
 					{
@@ -33,7 +37,7 @@ namespace goth2018::game_implementation::scenes
 					},
 					{
 						sf::Event::EventType::MouseButtonPressed,
-						goth2018::game_implementation::event::handler::broadcast_clicked_entity()
+						event_handler_type::broadcast_clicked_entity()
 					}
 				};
 				space_map_scene.event_handlers.merge(event_handlers);
@@ -74,7 +78,7 @@ namespace goth2018::game_implementation::scenes
 						planet_sprites.at(distribution(rng))
 					);
 
-					space_map_scene.entity_manager.entity_add_component<goth2018::game_implementation::entity::components::on_click>(entity, [](auto this_entity_id, auto & scene)
+					/*space_map_scene.entity_manager.entity_add_component<goth2018::game_implementation::entity::components::on_click>(entity, [](auto this_entity_id, auto & scene)
 					{
 						auto & entity = scene.entity_manager.entity_at(this_entity_id);
 
@@ -82,7 +86,7 @@ namespace goth2018::game_implementation::scenes
 
 						auto & rendering_component = scene.entity_manager.entity_get_component<goth2018::game_implementation::entity::components::rendering>(this_entity_id);
 						rendering_component.setColor(sf::Color::Red);
-					});
+					});*/
 				}
 			}
 

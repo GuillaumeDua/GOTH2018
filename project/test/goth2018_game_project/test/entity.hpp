@@ -5,7 +5,7 @@
 #include <tuple>
 #include <vector>
 
-#include <goth2018_game_project/engine/entity.hpp>
+#include <goth2018_game_project/game_implementation/entity.hpp>
 
 #include <gcl_cpp/introspection.hpp>
 #include <type_traits>
