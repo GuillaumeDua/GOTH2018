@@ -37,7 +37,7 @@ namespace goth2018::game_implementation::scenes
 					},
 					{
 						sf::Event::EventType::MouseButtonPressed,
-						event_handler_type::broadcast_clicked_entity()
+						event_handler_type::broadcast_clicked_entity{}
 					}
 				};
 				scene.event_handlers.merge(event_handlers);
@@ -83,15 +83,15 @@ namespace goth2018::game_implementation::scenes
 						planet_sprites.at(distribution(rng))
 					);
 
-					/*space_map_scene.entity_manager.entity_add_component<goth2018::game_implementation::entity::components::on_click>(entity, [](auto this_entity_id, auto & scene)
+					scene.entity_manager.entity_add_component<goth2018::game_implementation::entity::components::on_click>(entity, [](auto this_entity_id, auto & ecs_manager)
 					{
-						auto & entity = scene.entity_manager.entity_at(this_entity_id);
+						auto & entity = ecs_manager.entity_at(this_entity_id);
 
 						std::cout << "clicked element : {" << entity.id << ", " << entity.persistent_id << "}\n";
 
-						auto & rendering_component = scene.entity_manager.entity_get_component<goth2018::game_implementation::entity::components::rendering>(this_entity_id);
+						auto & rendering_component = ecs_manager.entity_get_component<goth2018::game_implementation::entity::components::rendering>(this_entity_id);
 						rendering_component.setColor(sf::Color::Red);
-					});*/
+					});
 				}
 			}
 

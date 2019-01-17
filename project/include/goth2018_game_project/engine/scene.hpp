@@ -24,7 +24,7 @@ namespace goth2018::engine
 	struct scene
 	{
 		using menu_drawer_type = std::function<void()>;
-		using event_handler_type = std::function<void(const sf::Event&, scene<ECS_manager_type>&)>; // todo : entity_manager instead of scene ?
+		using event_handler_type = std::function<void(const sf::Event&, ECS_manager_type&)>;
 		using event_handlers_container_type = std::unordered_multimap<sf::Event::EventType, event_handler_type>;
 		using entity_manager_type = ECS_manager_type;
 		using ECS_EM_operator_type = ECS_EM_operator<ECS_manager_type>;
@@ -63,7 +63,7 @@ namespace goth2018::engine
 			auto match = event_handlers.equal_range(event.type);
 			for (auto event_handler_it = match.first; event_handler_it != match.second; ++event_handler_it)
 			{
-				event_handler_it->second(event, *this);
+				event_handler_it->second(event, entity_manager);
 			}
 			entity_manager.reorder(); // event handlers could add / remove entities
 		}
@@ -71,7 +71,7 @@ namespace goth2018::engine
 		const std::string name;
 		const sf::Sprite background;
 		event_handlers_container_type event_handlers;
-		entity_manager_type entity_manager{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation. // todo : extend default capacity
+		entity_manager_type entity_manager{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation. // todo : extend default capacity (later dev stages)
 		ECS_EM_operator_type entity_operator;
 
 	private:

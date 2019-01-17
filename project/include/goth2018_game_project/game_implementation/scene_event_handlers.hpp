@@ -10,12 +10,13 @@ namespace goth2018::game_implementation::event
 	{
 		using handler_type = typename goth2018::engine::scene<ECS_manager_type>::event_handler_type;
 
-		static auto broadcast_clicked_entity()
+		struct broadcast_clicked_entity
 		{
-			return [](const sf::Event & ev, auto & current_scene)
+			template <typename ECS_EM_type>
+			void operator()(const sf::Event & ev, ECS_EM_type & entity_manager) const
 			{
 				using clickable_entities = typename goth2018::game_implementation::entity::contracts::clickable;
-				current_scene.entity_manager.for_each_entities(clickable_entities{}, [&ev, &current_scene](auto & entity, auto & position, auto & size/*, auto & on_click*/)
+				entity_manager.for_each_entities(clickable_entities{}, [&ev, &entity_manager](auto & entity, auto & position, auto & size, auto & on_click)
 				{
 					// todo : if constexpr decltype(size) -> rectlangle or circle shape
 
@@ -23,10 +24,10 @@ namespace goth2018::game_implementation::event
 					using collision_algorithm = goth2018::engine::collision::algorithm::rectangle_shape;
 					if (collision_algorithm::is_collision(std::forward_as_tuple(position, size), mouse_position))
 					{
-						//on_click(entity, current_scene);
+						on_click(entity, entity_manager);
 					}
 				});
-			};
-		}
+			}
+		};
 	};
 }

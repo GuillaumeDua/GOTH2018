@@ -47,7 +47,7 @@ namespace goth2018::engine
 			{
 				input();
 				update();
-				render_once();
+				draw();
 			};
 
 			is_running = true;
@@ -86,7 +86,7 @@ namespace goth2018::engine
 			auto & active_scene = *active_scene_ptr;
 			active_scene.update();
 		}
-		void render_once()
+		void draw()
 		{
 			window.clear();
 			{	// draw scene
