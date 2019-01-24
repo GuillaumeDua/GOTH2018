@@ -16,7 +16,7 @@ namespace goth2018::game_implementation::entity
 
 		struct position
 		{
-			operator sf::Vector2f() const
+			operator const sf::Vector2f() const
 			{
 				return sf::Vector2f{ x, y };
 			}
@@ -24,7 +24,7 @@ namespace goth2018::game_implementation::entity
 		};
 		struct size
 		{
-			operator sf::Vector2f() const
+			operator const sf::Vector2f() const
 			{
 				return sf::Vector2f{ width, height };
 			}
