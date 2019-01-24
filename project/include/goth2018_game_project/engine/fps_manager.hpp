@@ -26,22 +26,24 @@ namespace goth2018::engine
 			static auto last_frame_time = clock_type::now();
 			static std::size_t fps_counter = 0;
 
-			elapsed_time = clock_type::now() - last_frame_time;
-			if (elapsed_time >= requiered_frame_delay)
+			const auto now = clock_type::now(); // costly
+
+			if (now >= next_second)
 			{
-				last_frame_time = clock_type::now();
-				++fps_counter;
-				per_frame(elapsed_time);
-			}
-			if (clock_type::now() >= next_second)
-			{
-				next_second = clock_type::now() + 1s;
+				next_second = now + 1s;
 				if (fps_counter != requiered_fps)
 					on_frame_drop(requiered_fps, fps_counter);
 				per_second(fps_counter);
 				fps_counter = 0;
 			}
 
+			elapsed_time = now - last_frame_time;
+			if (elapsed_time >= requiered_frame_delay)
+			{
+				last_frame_time = now;
+				++fps_counter;
+				per_frame(elapsed_time);
+			}
 		}
 		void requiere_fps(std::size_t fps)
 		{
