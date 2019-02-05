@@ -4,6 +4,7 @@
 
 #include <functional>
 #include <string>
+#include <string_view>
 #include <unordered_map>
 
 namespace goth2018::engine
@@ -32,21 +33,16 @@ namespace goth2018::engine
 		scene(const scene &) = delete; // for std::vector initializer_list
 		scene(scene &&) = default;
 
-		scene(std::string && scene_name, sf::Sprite & background_sprite, menu_drawer_type && scene_menu_drawer = []() {})
+		scene(std::string && scene_name, sf::Sprite && background_sprite, menu_drawer_type && scene_menu_drawer = []() {})
 			: menu_drawer{ scene_menu_drawer }
-			, background{ background_sprite }
-			, name{ std::forward<std::string>(scene_name) }
-		{}
-		scene(std::string && scene_name, const std::string & background_path, menu_drawer_type && scene_menu_drawer = []() {})
-			: menu_drawer{ scene_menu_drawer }
-			, background{ goth2018::graphics::textures::to_sprite(goth2018::graphics::textures::get(background_path)) }
+			, background{ std::forward<sf::Sprite>(background_sprite) }
 			, name{ std::forward<std::string>(scene_name) }
 		{}
 
 		void update()
 		{
-			if (entity_operator.update)
-				entity_operator.update(entity_manager);
+			assert(entity_operator.update);
+			entity_operator.update(entity_manager);
 		}
 
 		void draw(sf::RenderWindow & window)
@@ -54,8 +50,8 @@ namespace goth2018::engine
 			window.draw(background);
 			menu_drawer();
 
-			if (entity_operator.draw)
-				entity_operator.draw(entity_manager, window);
+			assert(entity_operator.draw);
+			entity_operator.draw(entity_manager, window);
 		}
 
 		void dispatch_event(sf::Event & event)

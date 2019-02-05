@@ -45,6 +45,15 @@ namespace goth2018::graphics
 		}
 	}
 
+	namespace sprite
+	{
+		static auto create(std::string && path)
+		{
+			const auto & texture = goth2018::graphics::textures::get(path);
+			return goth2018::graphics::textures::to_sprite(texture);
+		}
+	}
+
 	struct window : sf::RenderWindow
 	{
 		using size_type = std::pair<unsigned int, unsigned int>;

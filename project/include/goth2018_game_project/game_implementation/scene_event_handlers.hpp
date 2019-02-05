@@ -29,5 +29,6 @@ namespace goth2018::game_implementation::event
 				});
 			}
 		};
+		static_assert(std::is_trivial_v<broadcast_clicked_entity>);
 	};
 }

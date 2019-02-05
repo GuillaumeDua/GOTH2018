@@ -60,7 +60,9 @@ namespace goth2018::game_implementation::scenes
 		static auto generate()
 		{
 			using scene_type = goth2018::engine::scene<game_implementation::entity::manager_type>;
-			auto scene = scene_type{ "stars_view", std::string{ goth2018::configuration::path::background } +"background.png" };
+			auto scene_background_path = std::string{ goth2018::configuration::path::background } +"background.png";
+			auto scene_background = graphics::sprite::create(std::move(scene_background_path));
+			auto scene = scene_type{ "stars_view",  std::move(scene_background)};
 			{	// events
 				std::decay_t<decltype(scene.event_handlers)> event_handlers
 				{
