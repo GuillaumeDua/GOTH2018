@@ -6,6 +6,8 @@
 #include <string>
 #include <string_view>
 #include <unordered_map>
+#include <variant>
+#include <cassert>
 
 namespace goth2018::engine
 {
@@ -22,7 +24,7 @@ namespace goth2018::engine
 	};
 
 	template <class ECS_manager_type>
-	struct scene
+	struct ECS_scene
 	{
 		using menu_drawer_type = std::function<void()>;
 		using event_handler_type = std::function<void(const sf::Event&, ECS_manager_type&)>;
@@ -30,11 +32,11 @@ namespace goth2018::engine
 		using entity_manager_type = ECS_manager_type;
 		using ECS_EM_operator_type = ECS_EM_operator<ECS_manager_type>;
 
-		scene(const scene &) = delete; // for std::vector initializer_list
-		scene(scene &&) = default;
+		ECS_scene(const ECS_scene &) = delete; // for std::vector initializer_list
+		ECS_scene(ECS_scene &&) = default;
 
-		scene(std::string && scene_name, sf::Sprite && background_sprite, menu_drawer_type && scene_menu_drawer = []() {})
-			: menu_drawer{ scene_menu_drawer }
+		ECS_scene(std::string && scene_name, sf::Sprite && background_sprite, menu_drawer_type && scene_menu_drawer = []() {})
+			: menu_drawer{ std::forward<menu_drawer_type>(scene_menu_drawer) }
 			, background{ std::forward<sf::Sprite>(background_sprite) }
 			, name{ std::forward<std::string>(scene_name) }
 		{}
@@ -73,4 +75,6 @@ namespace goth2018::engine
 	private:
 		const menu_drawer_type menu_drawer;
 	};
+
+	
 }

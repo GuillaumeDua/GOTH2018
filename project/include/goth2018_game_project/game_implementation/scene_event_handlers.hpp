@@ -8,7 +8,7 @@ namespace goth2018::game_implementation::event
 	template <class ECS_manager_type>
 	struct handler
 	{
-		using handler_type = typename goth2018::engine::scene<ECS_manager_type>::event_handler_type;
+		using handler_type = typename goth2018::engine::ECS_scene<ECS_manager_type>::event_handler_type;
 
 		struct broadcast_clicked_entity
 		{

@@ -38,19 +38,21 @@ auto main() -> int
 
 		using ECS_manager_type = goth2018::game_implementation::entity::manager_type;
 
-		using scene_type = goth2018::engine::scene<ECS_manager_type>;
+		/*using scene_type = goth2018::engine::ECS_scene<ECS_manager_type>;
 		auto scenes = gcl::container::make_vector<scene_type>
 		(
 			goth2018::game_implementation::scenes::space_map::generate(),
 			goth2018::game_implementation::scenes::exploration::generate(),
 			goth2018::game_implementation::scenes::stars_view::generate()
-		);
+		);*/
 
-		using core_type = goth2018::engine::core<ECS_manager_type>;
-		core_type system
+		//using core_type = goth2018::engine::core<ECS_manager_type>;
+		goth2018::engine::core system
 		{
 			window,
-			std::move(scenes)
+			//goth2018::game_implementation::scenes::space_map::generate(),
+			//goth2018::game_implementation::scenes::exploration::generate(),
+			goth2018::game_implementation::scenes::stars_view::generate()
 		};
 
 		// todo : behaviors

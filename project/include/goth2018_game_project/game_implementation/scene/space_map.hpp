@@ -17,7 +17,7 @@ namespace goth2018::game_implementation::scenes
 		static auto generate()
 		{
 			using ECS_manager_type = typename goth2018::game_implementation::entity::manager_type;
-			using scene_type = goth2018::engine::scene<ECS_manager_type>;
+			using scene_type = goth2018::engine::ECS_scene<ECS_manager_type>;
 
 			auto scene_background_path = std::string{ goth2018::configuration::path::background } +"background.png";
 			auto scene_background = graphics::sprite::create(std::move(scene_background_path));

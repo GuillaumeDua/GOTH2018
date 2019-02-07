@@ -5,6 +5,8 @@
 
 #include <gcl_cpp/introspection.hpp>
 #include <gcl_cpp/tuple_utils.hpp>
+#include <gcl_cpp/container/selector.hpp>
+#include <gcl_cpp/container/utility.hpp>
 
 #include <vector>
 #include <utility>
@@ -12,22 +14,24 @@
 namespace goth2018::engine
 {
 	// todo : expose data_context + serializer
-	template <class ECS_manager_type>
+	//template <class ECS_manager_type>
+	template <class ... scene_type>
 	struct core
 	{
-		using scene_type = scene<ECS_manager_type>;
-		using scene_collection = std::vector<scene_type>;
+		/*using scene_type = ECS_scene<ECS_manager_type>;
+		using scene_collection = std::vector<scene_type>;*/
 
 		core(const core &) = delete;
 		core(core &&) = default;
 
-		core(sf::RenderWindow & render_window, scene_collection && scenes_values)
+		using scene_collection_type = decltype(gcl::container::make_variant_array(std::declval<scene_type>()...));
+
+		core(sf::RenderWindow & render_window, scene_type && ... scenes_values)
 			: window{ render_window }
-			, scenes{ std::forward<std::decay_t<decltype(scenes_values)>>(scenes_values) }
+			, scene_selector{ std::move(gcl::container::make_variant_array(std::forward<scene_type>(scenes_values)...))}
+			/*, scenes{ std::forward<std::decay_t<decltype(scenes_values)>>(scenes_values) }*/
 		{	// construct with a scene collection
-			if (scenes.size() == 0)
-				throw std::runtime_error{ "goth2018::graphics::core::ctor : no scenes" };
-			active_scene_ptr = &(*std::begin(scenes));
+			static_assert(sizeof...(scenes_values) > 0, "goth2018::graphics::core::ctor : no scenes");
 		}
 
 		void run()
@@ -41,7 +45,10 @@ namespace goth2018::engine
 			};
 			frame_manager.per_second = [this](auto fps_per_second)
 			{
-				window.setTitle(active_scene_ptr->name + " : " + std::to_string(fps_per_second) + " fps");
+				std::visit([this, &fps_per_second](auto & scene)
+				{
+					window.setTitle(scene.name + " : " + std::to_string(fps_per_second) + " fps");
+				}, scene_selector.get_selected());
 			};
 			frame_manager.per_frame = [this](const auto & elapsed_time)
 			{
@@ -68,8 +75,10 @@ namespace goth2018::engine
 			sf::Event event;
 			while (window.pollEvent(event))
 			{
-				auto & active_scene = *active_scene_ptr;
-				active_scene.dispatch_event(event);
+				std::visit([&event](auto & scene)
+				{
+					scene.dispatch_event(event);
+				}, scene_selector.get_selected());
 
 				ImGui::SFML::ProcessEvent(event);
 				if (event.type == sf::Event::Closed)
@@ -83,57 +92,60 @@ namespace goth2018::engine
 			static sf::Clock deltaClock;
 			ImGui::SFML::Update(window, deltaClock.restart());
 
-			auto & active_scene = *active_scene_ptr;
-			active_scene.update();
+			std::visit([](auto & scene)
+			{
+				scene.update();
+			}, scene_selector.get_selected());
 		}
 		void draw()
 		{
 			window.clear();
-			{	// draw scene
-				auto & active_scene = *active_scene_ptr;
-				active_scene.draw(window);
-			}
+
+			std::visit([&window = this->window](auto & scene)
+			{
+				scene.draw(window);
+			}, scene_selector.get_selected());
+
 			{	// draw UI navigation menu_bar
-				draw_navigation_menubar(scenes);
+				//draw_navigation_menubar(scenes); // todo !
 				ImGui::SFML::Render(window);
 			}
 			window.display();
 		}
 
-		void draw_navigation_menubar(scene_collection & scenes)
+	private:
+		void draw_navigation_menubar(typename scene_collection_type::value_type & scenes)
 		{	// switch across scenes
-			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, { 10, 10 });
-			ImGui::BeginMainMenuBar();
+			//ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, { 10, 10 });
+			//ImGui::BeginMainMenuBar();
 
-			if (ImGui::BeginMenu("Menu"))
-			{
-				if (ImGui::MenuItem("Save and quit", "Ctrl+S"))
-				{
-					/* serialize data_context */
-					stop();
-				}
-				ImGui::EndMenu();
-			}
-			for (auto & scene : scenes)
-			{
-				ImGui::PushID(scene.name.c_str());
-				ImGui::BeginGroup();
-				if (ImGui::Button(scene.name.c_str()))	// ImageButton?
-				{	// concurrency
-					active_scene_ptr = &scene;
-				}
-				ImGui::EndGroup();
-				ImGui::PopID();
+			//if (ImGui::BeginMenu("Menu"))
+			//{
+			//	if (ImGui::MenuItem("Save and quit", "Ctrl+S"))
+			//	{
+			//		/* serialize data_context */
+			//		stop();
+			//	}
+			//	ImGui::EndMenu();
+			//}
+			//for (auto & scene : scenes)
+			//{
+			//	ImGui::PushID(scene.name.c_str());
+			//	ImGui::BeginGroup();
+			//	if (ImGui::Button(scene.name.c_str()))	// ImageButton?
+			//	{	// concurrency
+			//		active_scene_ptr = &scene;
+			//	}
+			//	ImGui::EndGroup();
+			//	ImGui::PopID();
 
-			}
-			ImGui::EndMainMenuBar();
-			ImGui::PopStyleVar();
+			//}
+			//ImGui::EndMainMenuBar();
+			//ImGui::PopStyleVar();
 		}
 
-	private:
 		sf::RenderWindow & window;
-		scene_collection scenes;
-		typename scene_collection::value_type * active_scene_ptr;
+		gcl::container::selector<scene_collection_type> scene_selector;
 		bool is_running = false;
 	};
 }
