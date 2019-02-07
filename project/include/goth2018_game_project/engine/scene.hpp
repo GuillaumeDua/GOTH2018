@@ -23,6 +23,75 @@ namespace goth2018::engine
 		update_operation_type update;
 	};
 
+	struct scene
+	{	// scenes require to be a polymorphic, heap-allocable type
+		template <typename T, typename = std::enable_if_t<not std::is_same_v<T, scene>>>
+		scene(T && value)
+			: value{ std::make_unique<model<T>>(std::forward<T>(value)) }
+		{}
+
+		scene(scene &) = delete;
+		scene(scene &&) = default;
+
+		const std::string & get_name()
+		{
+			return value->get_name();
+		}
+		void update()
+		{
+			value->update();
+		}
+		void draw(sf::RenderWindow & window)
+		{
+			value->draw(window);
+		}
+		void dispatch_event(sf::Event & event)
+		{
+			value->dispatch_event(event);
+		}
+
+	private:
+		struct concept_type
+		{
+			virtual ~concept_type() = default;
+			virtual const std::string & get_name() = 0;
+			virtual void update() = 0;
+			virtual void draw(sf::RenderWindow & window) = 0;
+			virtual void dispatch_event(sf::Event & event) = 0;
+		};
+		template <typename T>
+		struct model final : concept_type
+		{
+			static_assert(not std::is_same_v<std::decay_t<T>, scene>);
+
+			model(T && arg)
+				: data(std::forward<T>(arg))
+			{}
+
+			const std::string & get_name() override
+			{
+				return data.get_name();
+			}
+			void update() override
+			{
+				data.update();
+			}
+			void draw(sf::RenderWindow & window) override
+			{
+				data.draw(window);
+			}
+			void dispatch_event(sf::Event & event) override
+			{
+				data.dispatch_event(event);
+			}
+
+			T data;
+		};
+
+		using value_type = std::unique_ptr<concept_type>;
+		value_type value;
+	};
+
 	template <class ECS_manager_type>
 	struct ECS_scene
 	{
@@ -66,13 +135,18 @@ namespace goth2018::engine
 			entity_manager.reorder(); // event handlers could add / remove entities
 		}
 
-		const std::string name;
-		const sf::Sprite background;
 		event_handlers_container_type event_handlers;
 		entity_manager_type entity_manager{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation. // todo : extend default capacity (later dev stages)
 		ECS_EM_operator_type entity_operator;
 
+		const auto & get_name()
+		{
+			return name;
+		}
+
 	private:
+		const std::string name;
+		const sf::Sprite background;
 		const menu_drawer_type menu_drawer;
 	};
 

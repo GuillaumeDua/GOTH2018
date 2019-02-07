@@ -5,7 +5,6 @@
 
 #include <gcl_cpp/introspection.hpp>
 #include <gcl_cpp/tuple_utils.hpp>
-#include <gcl_cpp/container/selector.hpp>
 #include <gcl_cpp/container/utility.hpp>
 
 #include <vector>
@@ -14,24 +13,18 @@
 namespace goth2018::engine
 {
 	// todo : expose data_context + serializer
-	//template <class ECS_manager_type>
-	template <class ... scene_type>
 	struct core
 	{
-		/*using scene_type = ECS_scene<ECS_manager_type>;
-		using scene_collection = std::vector<scene_type>;*/
-
 		core(const core &) = delete;
 		core(core &&) = default;
 
-		using scene_collection_type = decltype(gcl::container::make_variant_array(std::declval<scene_type>()...));
+		using scene_collection_type = std::vector<engine::scene>;
 
-		core(sf::RenderWindow & render_window, scene_type && ... scenes_values)
+		core(sf::RenderWindow & render_window, scene_collection_type && scenes_args)
 			: window{ render_window }
-			, scene_selector{ std::move(gcl::container::make_variant_array(std::forward<scene_type>(scenes_values)...))}
-			/*, scenes{ std::forward<std::decay_t<decltype(scenes_values)>>(scenes_values) }*/
+			, scenes( std::forward<scene_collection_type>(scenes_args) )
 		{	// construct with a scene collection
-			static_assert(sizeof...(scenes_values) > 0, "goth2018::graphics::core::ctor : no scenes");
+			assert(scenes.size() > 0);
 		}
 
 		void run()
@@ -45,10 +38,8 @@ namespace goth2018::engine
 			};
 			frame_manager.per_second = [this](auto fps_per_second)
 			{
-				std::visit([this, &fps_per_second](auto & scene)
-				{
-					window.setTitle(scene.name + " : " + std::to_string(fps_per_second) + " fps");
-				}, scene_selector.get_selected());
+				auto & active_scene = scenes.at(active_scene_index);
+				window.setTitle(active_scene.get_name() + " : " + std::to_string(fps_per_second) + " fps");
 			};
 			frame_manager.per_frame = [this](const auto & elapsed_time)
 			{
@@ -72,13 +63,11 @@ namespace goth2018::engine
 
 		void input()
 		{
+			auto & active_scene = scenes.at(active_scene_index); // what if the event change the active scene ?
 			sf::Event event;
 			while (window.pollEvent(event))
 			{
-				std::visit([&event](auto & scene)
-				{
-					scene.dispatch_event(event);
-				}, scene_selector.get_selected());
+				active_scene.dispatch_event(event);
 
 				ImGui::SFML::ProcessEvent(event);
 				if (event.type == sf::Event::Closed)
@@ -92,60 +81,60 @@ namespace goth2018::engine
 			static sf::Clock deltaClock;
 			ImGui::SFML::Update(window, deltaClock.restart());
 
-			std::visit([](auto & scene)
-			{
-				scene.update();
-			}, scene_selector.get_selected());
+			auto & active_scene = scenes.at(active_scene_index);
+			active_scene.update();
 		}
 		void draw()
 		{
 			window.clear();
 
-			std::visit([&window = this->window](auto & scene)
-			{
-				scene.draw(window);
-			}, scene_selector.get_selected());
+			auto & active_scene = scenes.at(active_scene_index);
+			active_scene.draw(window);
 
 			{	// draw UI navigation menu_bar
-				//draw_navigation_menubar(scenes); // todo !
+				draw_navigation_menubar();
 				ImGui::SFML::Render(window);
 			}
 			window.display();
 		}
 
 	private:
-		void draw_navigation_menubar(typename scene_collection_type::value_type & scenes)
+
+		void draw_navigation_menubar()
 		{	// switch across scenes
-			//ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, { 10, 10 });
-			//ImGui::BeginMainMenuBar();
+			ImGui::PushStyleVar(ImGuiStyleVar_FramePadding, { 10, 10 });
+			ImGui::BeginMainMenuBar();
 
-			//if (ImGui::BeginMenu("Menu"))
-			//{
-			//	if (ImGui::MenuItem("Save and quit", "Ctrl+S"))
-			//	{
-			//		/* serialize data_context */
-			//		stop();
-			//	}
-			//	ImGui::EndMenu();
-			//}
-			//for (auto & scene : scenes)
-			//{
-			//	ImGui::PushID(scene.name.c_str());
-			//	ImGui::BeginGroup();
-			//	if (ImGui::Button(scene.name.c_str()))	// ImageButton?
-			//	{	// concurrency
-			//		active_scene_ptr = &scene;
-			//	}
-			//	ImGui::EndGroup();
-			//	ImGui::PopID();
+			if (ImGui::BeginMenu("Menu"))
+			{
+				if (ImGui::MenuItem("Save and quit", "Ctrl+S"))
+				{
+					/* serialize data_context */
+					stop();
+				}
+				ImGui::EndMenu();
+			}
+			for (auto scene_index{ 0 }; scene_index < scenes.size(); ++scene_index)
+			{
+				auto & scene = scenes.at(scene_index);
 
-			//}
-			//ImGui::EndMainMenuBar();
-			//ImGui::PopStyleVar();
+				ImGui::PushID(scene.get_name().c_str());
+				ImGui::BeginGroup();
+				if (ImGui::Button(scene.get_name().c_str()))	// ImageButton?
+				{	// concurrency
+					active_scene_index = scene_index;
+				}
+				ImGui::EndGroup();
+				ImGui::PopID();
+
+			}
+			ImGui::EndMainMenuBar();
+			ImGui::PopStyleVar();
 		}
 
 		sf::RenderWindow & window;
-		gcl::container::selector<scene_collection_type> scene_selector;
+		scene_collection_type scenes;
+		std::size_t active_scene_index = 0;
 		bool is_running = false;
 	};
 }
