@@ -12,7 +12,7 @@ namespace goth2018::game_implementation::entity
 	namespace components
 	{
 		// todo : velocity component
-		// todo : movable  contract
+		// todo : movable  contract : position + velocity (+ orientation) ?
 
 		struct position
 		{
@@ -53,8 +53,6 @@ namespace goth2018::game_implementation::entity
 	>
 	{};
 
-	using type = manager_type::entity_type;
-
 	namespace contracts
 	{
 		using drawable = gcl::pattern::ecs::contract
@@ -74,8 +72,11 @@ namespace goth2018::game_implementation::entity
 		>;
 	}
 
-	namespace operations
+	template <class ECS_EM>
+	struct operations
 	{
+		using manager_type = ECS_EM;
+
 		struct draw
 		{
 			void operator()(manager_type & entity_manager, sf::RenderWindow & window) const
@@ -105,5 +106,5 @@ namespace goth2018::game_implementation::entity
 				entity_manager.reorder(); // on_entity_update could add / remove entities
 			}
 		};
-	}
+	};
 }

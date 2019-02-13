@@ -45,10 +45,11 @@ namespace goth2018::game_implementation::scenes
 				};
 				scene.event_handlers.merge(event_handlers);
 			}
+			
 			scene.entity_operator = decltype(scene.entity_operator)
 			{
-				game_implementation::entity::operations::draw{},
-				game_implementation::entity::operations::update{}
+				game_implementation::entity::operations<ECS_manager_type>::draw{},
+				game_implementation::entity::operations<ECS_manager_type>::update{}
 			};
 
 			auto planet_sprites = graphics::spritesheet
