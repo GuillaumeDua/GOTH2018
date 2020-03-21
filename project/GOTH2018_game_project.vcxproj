@@ -26,12 +26,14 @@
     <ClCompile Include="source\Source.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="event_dispatcher.hpp" />
     <ClInclude Include="include\goth2018_game_project\configuration.hpp" />
     <ClInclude Include="include\goth2018_game_project\engine\collision.hpp" />
     <ClInclude Include="include\goth2018_game_project\engine\core.hpp" />
     <ClInclude Include="include\goth2018_game_project\engine\fps_manager.hpp" />
     <ClInclude Include="include\goth2018_game_project\engine\scene.hpp" />
     <ClInclude Include="include\goth2018_game_project\game_implementation\entity.hpp" />
+    <ClInclude Include="include\goth2018_game_project\game_implementation\scene\bouncing_balls.hpp" />
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene\exploration.hpp" />
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene\space_map.hpp" />
     <ClInclude Include="include\goth2018_game_project\game_implementation\scene\stars_view.hpp" />
@@ -70,32 +72,32 @@
     <VCProjectVersion>15.0</VCProjectVersion>
     <ProjectGuid>{C0CCD03D-2F5D-4ACA-8142-890F80C1025D}</ProjectGuid>
     <RootNamespace>quicktestSFML</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17134.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>

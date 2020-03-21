@@ -31,7 +31,7 @@ namespace goth2018::game_implementation::scenes
 		static auto generate()
 		{
 			using ECS_EM_type = game_implementation::entity::manager_type;
-			using scene_type = goth2018::engine::ECS_scene<ECS_EM_type>;
+			using scene_type = goth2018::engine::scene_impl<ECS_EM_type>;
 			auto scene_background_path = std::string{ goth2018::configuration::path::background } +"planet_cartoon_landscape.png";
 			auto scene_background = graphics::sprite::create(std::move(scene_background_path));
 			auto scene = scene_type
@@ -40,7 +40,7 @@ namespace goth2018::game_implementation::scenes
 				std::move(scene_background),
 				[]() { control::draw_exploration_menu(); }
 			};
-			scene.entity_operator = decltype(scene.entity_operator)
+			scene.entity_operators = decltype(scene.entity_operators)
 			{
 				game_implementation::entity::operations<ECS_EM_type>::draw{},
 				game_implementation::entity::operations<ECS_EM_type>::update{}

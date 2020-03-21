@@ -46,6 +46,12 @@
     <ClInclude Include="include\goth2018_game_project\game_implementation\entity.hpp">
       <Filter>include\goth2018_game_project\game_implementation</Filter>
     </ClInclude>
+    <ClInclude Include="event_dispatcher.hpp">
+      <Filter>include\goth2018_game_project\engine</Filter>
+    </ClInclude>
+    <ClInclude Include="include\goth2018_game_project\game_implementation\scene\bouncing_balls.hpp">
+      <Filter>include\goth2018_game_project\game_implementation\scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="include">

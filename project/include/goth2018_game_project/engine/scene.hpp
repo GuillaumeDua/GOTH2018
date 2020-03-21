@@ -24,10 +24,11 @@ namespace goth2018::engine
 	};
 
 	struct scene
-	{	// scenes require to be a polymorphic, heap-allocable type
+	{	// scene requires to be a polymorphic, heap-allocable type
+
 		template <typename T, typename = std::enable_if_t<not std::is_same_v<T, scene>>>
-		scene(T && value)
-			: value{ std::make_unique<model<T>>(std::forward<T>(value)) }
+		scene(T && arg)
+			: value{ std::make_unique<model<T>>(std::forward<T>(arg)) }
 		{}
 
 		scene(scene &) = delete;
@@ -93,18 +94,18 @@ namespace goth2018::engine
 	};
 
 	template <class ECS_manager_type>
-	struct ECS_scene
+	struct scene_impl
 	{
 		using menu_drawer_type = std::function<void()>;
 		using event_handler_type = std::function<void(const sf::Event&, ECS_manager_type&)>;
 		using event_handlers_container_type = std::unordered_multimap<sf::Event::EventType, event_handler_type>;
 		using entity_manager_type = ECS_manager_type;
-		using ECS_EM_operator_type = ECS_EM_operator<ECS_manager_type>;
+		using ECS_EM_operators_type = ECS_EM_operator<ECS_manager_type>;
 
-		ECS_scene(const ECS_scene &) = delete; // for std::vector initializer_list
-		ECS_scene(ECS_scene &&) = default;
+		scene_impl(const scene_impl &) = delete; // for std::vector initializer_list
+		scene_impl(scene_impl &&) = default;
 
-		ECS_scene(std::string && scene_name, sf::Sprite && background_sprite, menu_drawer_type && scene_menu_drawer = []() {})
+		scene_impl(std::string && scene_name, sf::Sprite && background_sprite, menu_drawer_type && scene_menu_drawer = []() {})
 			: menu_drawer{ std::forward<menu_drawer_type>(scene_menu_drawer) }
 			, background{ std::forward<sf::Sprite>(background_sprite) }
 			, name{ std::forward<std::string>(scene_name) }
@@ -112,19 +113,17 @@ namespace goth2018::engine
 
 		void update()
 		{
-			assert(entity_operator.update);
-			entity_operator.update(entity_manager);
+			assert(entity_operators.update);
+			entity_operators.update(entity_manager);
 		}
-
 		void draw(sf::RenderWindow & window)
 		{
 			window.draw(background);
 			menu_drawer();
 
-			assert(entity_operator.draw);
-			entity_operator.draw(entity_manager, window);
+			assert(entity_operators.draw);
+			entity_operators.draw(entity_manager, window);
 		}
-
 		void dispatch_event(sf::Event & event)
 		{
 			auto match = event_handlers.equal_range(event.type);
@@ -137,18 +136,21 @@ namespace goth2018::engine
 
 		event_handlers_container_type event_handlers;
 		entity_manager_type entity_manager{ 1 }; // default capacity to 1 for early dev. emphasis storage reallocation. // todo : extend default capacity (later dev stages)
-		ECS_EM_operator_type entity_operator;
+		ECS_EM_operators_type entity_operators;
 
 		const auto & get_name()
 		{
 			return name;
 		}
 
+		menu_drawer_type menu_drawer;
 	private:
 		const std::string name;
 		const sf::Sprite background;
-		const menu_drawer_type menu_drawer;
 	};
 
-	
+	// scene_creator
+	//
+	// create().attach_menu().attach_ECS_operators() ...
+	// return *this -> scene_impl &
 }

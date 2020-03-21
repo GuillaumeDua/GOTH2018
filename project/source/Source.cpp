@@ -23,6 +23,7 @@
 #include <goth2018_game_project/game_implementation/scene/space_map.hpp>
 #include <goth2018_game_project/game_implementation/scene/exploration.hpp>
 #include <goth2018_game_project/game_implementation/scene/stars_view.hpp>
+#include <goth2018_game_project/game_implementation/scene/bouncing_balls.hpp>
 
 #include <goth2018_game_project/game_implementation/entity.hpp>
 
@@ -41,7 +42,8 @@ auto main() -> int
 		(
 			goth2018::game_implementation::scenes::space_map::generate(),
 			goth2018::game_implementation::scenes::exploration::generate(),
-			goth2018::game_implementation::scenes::stars_view::generate()
+			goth2018::game_implementation::scenes::stars_view::generate()/*,
+			goth2018::game_implementation::scenes::bouncing_balls::generate(window)*/
 		);
 
 		goth2018::engine::core system

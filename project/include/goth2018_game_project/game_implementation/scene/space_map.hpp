@@ -17,7 +17,7 @@ namespace goth2018::game_implementation::scenes
 		static auto generate()
 		{
 			using ECS_manager_type = typename goth2018::game_implementation::entity::manager_type;
-			using scene_type = goth2018::engine::ECS_scene<ECS_manager_type>;
+			using scene_type = goth2018::engine::scene_impl<ECS_manager_type>;
 
 			auto scene_background_path = std::string{ goth2018::configuration::path::background } +"background.png";
 			auto scene_background = graphics::sprite::create(std::move(scene_background_path));
@@ -46,7 +46,7 @@ namespace goth2018::game_implementation::scenes
 				scene.event_handlers.merge(event_handlers);
 			}
 			
-			scene.entity_operator = decltype(scene.entity_operator)
+			scene.entity_operators = decltype(scene.entity_operators)
 			{
 				game_implementation::entity::operations<ECS_manager_type>::draw{},
 				game_implementation::entity::operations<ECS_manager_type>::update{}
@@ -84,7 +84,7 @@ namespace goth2018::game_implementation::scenes
 					(
 						goth2018::game_implementation::entity::components::position{ 50.f + column_counter * 150.f, 50.f + (100.f * row_counter) },
 						goth2018::game_implementation::entity::components::size{ 384.f / 5, 384.f / 5 }, // scale is 0.2f
-						planet_sprites.at(distribution(rng))
+						goth2018::game_implementation::entity::components::rendering{ planet_sprites.at(distribution(rng)) }
 					);
 
 					scene.entity_manager.entity_add_component<goth2018::game_implementation::entity::components::on_click>(entity, [](auto this_entity_id, auto & ecs_manager)
